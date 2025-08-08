@@ -4,19 +4,20 @@
 clc; clear all;
 
 dt = 0.01;
-tmax = 20;
+tmax = 5;
 N = round(tmax/dt);
 lambda = 0.3;
 N0 = 100;
 
 M = zeros(N, N);
 R = -lambda * (0:N-1)' * dt * dt;
+R(1) = N0;
 
-for i = 1:N-1
-  M(i, i) = -1;
-  M(i, i+1) = 1;
+M(1, 1) = 1;
+for i = 2:N
+  M(i, i-1) = -1;
+  M(i, i) = 1;
 endfor
-M(N, N) = -1;
 
 N = size(M, 1);
 A = [ M R ]; % Augmented matrix
@@ -34,4 +35,5 @@ for p = N:-1:1
 endfor
 
 RES = RES';
-plot(RES);
+disp(RES);
+%plot(RES);
