@@ -39,6 +39,6 @@ endfor
 
 RES = RES';
 printf("---------------------------------------------------\n")
-printf("Solutions obtained through direct comparision\nx = %.4f\ny = %.4f\nz = %.4f\n", ...
+printf("Solutions obtained through back-substitution:\nx = %.4f\ny = %.4f\nz = %.4f\n", ...
 RES(1), RES(2), RES(3));
 disp("Where x, y and z is current in loop 1, 2 and 3 respectively in clock-wise direction")
