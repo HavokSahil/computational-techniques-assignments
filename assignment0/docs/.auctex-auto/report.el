@@ -6,7 +6,7 @@
    (TeX-add-to-alist 'LaTeX-provided-class-options
                      '(("report" "12pt" "a4paper")))
    (TeX-add-to-alist 'LaTeX-provided-package-options
-                     '(("inputenc" "utf8") ("amsmath" "") ("amssymb" "") ("graphicx" "") ("hyperref" "") ("geometry" "")))
+                     '(("inputenc" "utf8") ("amsmath" "") ("amssymb" "") ("graphicx" "") ("hyperref" "") ("geometry" "") ("titlesec" "")))
    (TeX-run-style-hooks
     "latex2e"
     "report1"
@@ -19,6 +19,7 @@
     "amssymb"
     "graphicx"
     "hyperref"
-    "geometry"))
+    "geometry"
+    "titlesec"))
  :latex)
 
