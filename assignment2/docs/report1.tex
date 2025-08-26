@@ -1,0 +1,95 @@
+\section*{Problem Statement}
+The objective of this problem is to solve a system of linear equations
+\[
+  AX = B
+\]
+using the LU decomposition method, where $A$ is a square matrix and $B$ is a known vector.
+
+\begin{quote}
+  \textbf{NOTE}: The code can be accessed using this link: \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment2/a1.m}{MATLAB}, \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment2/a1.jl}{Julia}.
+\end{quote}
+
+\section*{Methodology}
+The LU decomposition technique factors a square matrix $A$ into the product of a lower triangular matrix $L$ and an upper triangular matrix $U$, such that:
+\[
+  A = LU
+\]
+This decomposition enables solving the system $AX = B$ in two steps:
+\begin{enumerate}
+  \item Forward substitution: Solve $LY = B$ for $Y$.
+  \item Backward substitution: Solve $UX = Y$ for $X$.
+\end{enumerate}
+
+\subsection*{Pseudo-code}
+\begin{enumerate}
+  \item Initialize $L$ and $U$ as zero matrices of the same size as $A$.
+  \item For each column $c$ and row $r$:
+    \begin{itemize}
+      \item If $c \geq r$, compute entries of $U$.
+        \begin{equation}
+            U[r,c] = A[r,c] - L[r,1:r-1] \cdot U[1:r-1,c]
+        \label{eq:computeu}
+        \end{equation}
+      \item If $c < r$, compute entries of $L$.
+            \begin{equation}
+            L[r,c] = A[r,c] - \frac{A[r,c] - L[r,1:c-1] \cdot U[1:c-1,c]}{U[c,c]}
+          \label{eq:computel}
+          \end{equation}
+      \item Set diagonal entries of $L$ to $1$.
+    \end{itemize}
+  \item Solve the system:
+        \begin{equation}
+          \begin{aligned}
+            LY &= B && \text{(forward substitution)} \\
+            Y[i] &= \frac{B[i] - L[i,1:i-1] \cdot Y[1:i-1]}{L[i,i]}
+          \end{aligned}
+          \label{eq:forsubs}
+        \end{equation}
+
+        \begin{equation}
+          \begin{aligned}
+            UX &= Y && \text{(backward substitution)} \\
+            X[i] &= \frac{Y[i] - U[i,i+1:N] \cdot X[i+1:N]}{U[i,i]}
+          \end{aligned}
+          \label{eq:backsubs}
+        \end{equation}
+\end{enumerate}
+
+\section*{Results}
+For the given system
+\[
+A = \begin{bmatrix}
+1 & 1 & 1 \\
+4 & 3 & -1 \\
+3 & 5 & 3
+\end{bmatrix}, \quad
+B = \begin{bmatrix}
+1 \\ 6 \\ 4
+\end{bmatrix},
+\]
+the LU decomposition produces:
+
+\[
+L = \begin{bmatrix}
+1 & 0 & 0 \\
+4 & 1 & 0 \\
+3 & 2 & 1
+\end{bmatrix}, \quad
+U = \begin{bmatrix}
+1 & 1 & 1 \\
+0 & -1 & -5 \\
+0 & 0 & -6
+\end{bmatrix}.
+\]
+
+Forward and backward substitution yield the solution vector:
+\[
+X = \begin{bmatrix}
+2.0000 \\
+3.0000 \\
+-4.0000
+\end{bmatrix}.
+\]
+
+\section*{Conclusion}
+The LU decomposition method successfully solves the system of linear equations by breaking the problem into simpler triangular systems. This method is computationally efficient for multiple right-hand sides $B$, since the factorization of $A$ is computed only once and can be reused.

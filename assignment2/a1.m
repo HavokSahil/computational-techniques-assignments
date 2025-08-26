@@ -1,3 +1,7 @@
+%% Program to Solve the system of linear equation using LU decomposition
+%% Author: Sahil Raj
+%% Assignment 2 Problem 1
+
 clc; clear all;
 
 A = [
@@ -37,7 +41,7 @@ disp(L);
 printf("U Matrix:\n");
 disp(U);
 
-%% Solve the two equations through back-substitution
+%% Solve the two equations through forward-substitutionn
 %   LY = B
 %   UX = Y
 Y = zeros(N, 1);
@@ -49,7 +53,7 @@ for i = 1:N
   endif
 endfor
 
-% Use the Y vector to solve for the X vector
+% Use the Y vector to solve for the X vector (back-substitution)
 X = zeros(N, 1);
 for i = N:-1:1
   if i == N

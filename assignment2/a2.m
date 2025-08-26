@@ -1,5 +1,10 @@
+% Program to solve the Classical Harmonic Oscillator problem using LU Decomposition
+%% Author: Sahil Raj
+%% Assignment 2 Problem 2
+
 clc; clear all;
 
+% Parameter Definition
 dt = 0.01;
 k = 5.0;
 m = 0.01;
@@ -12,6 +17,7 @@ v0 = 0.5;             % initial velocity
 x1 = x0 + v0 * dt;    % second initial parameter
 c = (k*dt*dt/m - 2);  %  The sub diagonal coefficient
 
+% Generate the A matrix, from the observed pattern
 A = zeros(N-2,N-2);
 for i = 1:N-2
   for j = 1:N-2
@@ -78,5 +84,9 @@ for i=1:N-2
   Z(i+2) = X(i);
 endfor
 
-plot(Z, 'k-');
+% Plot the solution
+plot(t, Z, 'k-');
+title("Position-time solution of Classical Harmonic Oscillator");
+xlabel("time (t)");
+ylabel("Position x(t)");
 
