@@ -15,7 +15,7 @@ Ys = data(:,2);
 scatter(Xs, Ys, 'k', "filled");
 xlabel("x");
 ylabel("f(x)");
-title("Plot of the Given Data Points");
+title("Plot of the Given Data Points with Lagrange Interpolation of Several Orders1");
 hold on;
 
 % Function to compute the Lagrange basis function value
@@ -41,8 +41,6 @@ endfunction
 
 % Compute the interpolating function for any order and plot it
 function interpolateNplot(Xs, Ys, N, order, color)
-  global Xs;
-  global Ys;
   xmin = min(Xs);
   xmax = max(Xs);
   xs = linspace(xmin, xmax, N);
@@ -50,13 +48,21 @@ function interpolateNplot(Xs, Ys, N, order, color)
   for i = 1:N
     ys(i) = Pk(Ys, Xs, order, xs(i));
   endfor
-  plot(xs, ys, color);
+  plot(xs, ys,color);
 endfunction
 
 % Plot the interpolating function of all order
 N = 100;
 mord = length(Xs) - 1;
+lgnds = ["True"];
+colors = ['b-', 'r-', 'g-']
 for i = 1:3
-  interpolateNplot(Xs, Ys, N, i, 'k-');
+  interpolateNplot(Xs, Ys, N, i, colors(i));
+  lgnds = [lgnds; strcat("Order: ", num2str(i))];
+  % Calculate the value of f(7), for each order and print in the console
+  f7 = Pk(Ys, Xs, i, 7.0);
+  printf("[Order: %d] f(7) = %f\n", i, f7);
 endfor
 
+legend(lgnds);
+hold off;
