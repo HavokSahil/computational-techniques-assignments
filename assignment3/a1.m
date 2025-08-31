@@ -1,3 +1,8 @@
+%% Program to interpolate a polynomial with different
+%% orders of Lagrange interpolation function.
+%% Author: Sahil Raj
+%% Assignment 3 Problem 1
+
 clc; clear all;
 
 data = [

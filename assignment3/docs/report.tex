@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper]{report}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {Problem \thechapter:}       % prints "Problem n"
+  {10pt}                      % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]              % optional vertical space after
+
+\title{\textbf{Assignment 3}\\Lagrange Interpolation Function}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{31 August 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Interpolation of Function with Several Orders of Lagrange Interpolation Function}
+\input{report1.tex}
+
+\chapter{Interpolation of Position Data of Earth around Sun}
+\input{report2.tex}
+
+\chapter{Error Function for Interpolation of $e^{x}$ from Values at Given Points}
+\input{report3.tex}
+
+\end{document}

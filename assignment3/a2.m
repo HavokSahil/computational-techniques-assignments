@@ -1,3 +1,14 @@
+%% Program to interpolate the position of earth around
+%% the sun on weekly basis from the given the first week
+%% observation of each month
+
+%% Author: Sahil Raj
+%% Assignment 3 Problem 2
+
+%% Note: the polynomial approximation is oscillating at the starts
+%% and the end, I read about it, the internet says that its the
+%% Runge phenomenon, I am not sure though.
+
 clc; clear all;
 
 % Program to plot the position of earth around the sun
@@ -72,7 +83,7 @@ subplot(2, 2, 3);
 scatter(Xs, Ys, 'k', 'filled');
 hold on;
 scatter(0, 0, 'r', 'filled'); % Sun
-title("Earth's observed monthly positions");
+title("(c) Earth's observed monthly positions");
 axis equal;
 hold off;
 
@@ -81,7 +92,7 @@ subplot(2, 2, 4);
 plot(pXs, pYs, 'k-'); % smoother curve
 hold on;
 scatter(0, 0, 'r', 'filled');
-title("Interpolated Earth orbit");
+title("(d) Interpolated Earth orbit");
 axis equal;
 hold off;
 
@@ -90,12 +101,12 @@ subplot(2, 2, 1);
 plot(weeks, Xs, 'o-');
 hold on;
 plot(weeks, Ys, 'o-');
-title("Original data vs weeks");
+title("(a) Original data vs weeks");
 hold off;
 
 subplot(2, 2, 2);
 plot(allweeks, pXs, '-');
 hold on;
 plot(allweeks, pYs, '-');
-title("Interpolated values vs weeks");
+title("(b) Interpolated values vs weeks");
 hold off;
