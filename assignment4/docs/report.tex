@@ -1,0 +1,47 @@
+\documentclass[12pt,a4paper]{report}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {Problem \thechapter:}       % prints "Problem n"
+  {10pt}                      % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]              % optional vertical space after
+
+\title{\textbf{Assignment 4}\\Divided Difference Interpolation \& Neville's Algorithm}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{07 September 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Interpolating of Trajectory using Newton's Divided Difference Method}
+\input{report1.tex}
+\pagebreak
+\chapter{Fitting a Polynomial to the Data of Energy Levels of Hydrogen Atom}
+\input{report2.tex}
+\pagebreak
+\chapter{Interpolating $Sin(35^{\circ})$ Value from the Support Data of Sin Function}
+\input{report3.tex}
+\chapter{Neville’s Interpolation of Probability Density of the Quantum Harmonic Oscillator}
+\input{report4.tex}
+\end{document}
