@@ -1,0 +1,48 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {Problem \thechapter:}       % prints "Problem n"
+  {10pt}                       % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]               % optional vertical space after
+
+\title{\textbf{Assignment 5}\\Numerical Methods: Interpolation and Differentiation}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{16 September 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Rational Interpolation of the Cotangent Function}
+\input{report1.tex}  % Report for rational interpolation of cot(x)
+
+\chapter{Rational Interpolation of Damped Harmonic Oscillator Amplitude}
+\input{report2.tex}  % Report for rational interpolation of damped oscillator
+
+\chapter{Numerical Derivative of $f(x) = \cot(x)$ Using Forward and Central Difference}
+\input{report3.tex}  % Report for numerical derivatives
+
+\chapter{Velocity Estimation from Position-Time Data Using Central Difference Method}
+\input{report4.tex}  % Report for central difference velocity estimation
+
+\end{document}

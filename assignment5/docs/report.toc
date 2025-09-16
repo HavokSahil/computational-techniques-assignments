@@ -1,0 +1,4 @@
+\contentsline {chapter}{\numberline {1}Rational Interpolation of the Cotangent Function}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Rational Interpolation of Damped Harmonic Oscillator Amplitude}{5}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Numerical Derivative of $f(x) = \cot (x)$ Using Forward and Central Difference}{8}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Velocity Estimation from Position-Time Data Using Central Difference Method}{10}{chapter.4}%
