@@ -1,6 +1,7 @@
-%% AUTHOR: Sahil Raj
 %% Program to solve a System of Linear Equation using Gaussian-Jordan Method
-
+%%
+%% AUTHOR: Sahil Raj
+%% Assignment 1 Problem 3
 clc; clear all;
 
 M = [ -76 25 50; 25 -56 1; 50 1 -106 ];

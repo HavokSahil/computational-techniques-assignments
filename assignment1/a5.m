@@ -1,8 +1,8 @@
-%% AUTHOR: Sahil Raj
 %% Program to solve the time dependent Shrodinger Equation using Gauss-Jordan Elimination
 
 %% NOTE: This code takes about a minute to run,
 %% TO GET FATER RESULT: reduce the tmax value
+%% AUTHOR: Sahil Raj
 
 clc; clear all;
 

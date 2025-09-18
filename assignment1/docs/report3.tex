@@ -1,0 +1,60 @@
+\section*{Problem Statement} 
+The objective of this problem is to solve a system of linear equations using the Gauss–Jordan elimination method. Unlike Gaussian elimination, which reduces the system to an upper-triangular form followed by back-substitution, Gauss–Jordan elimination directly reduces the augmented matrix to a diagonal (row-reduced echelon) form. This makes the solution values explicit without requiring further substitution.
+
+\section*{Methodology} 
+The Gauss–Jordan method transforms the augmented matrix $[M|R]$ into reduced row-echelon form (RREF). The steps are:
+
+\begin{enumerate}
+  \item Form the augmented matrix $A = [M|R]$.
+  \item For each pivot column $p = 1 \to n$:
+  \begin{itemize}
+    \item Identify the pivot element $A(p,p)$.
+    \item For each row $r \neq p$, eliminate $A(r,p)$ by subtracting a multiple of the pivot row.
+  \end{itemize}
+  \item Once all off-diagonal elements are zero, divide each row by its pivot element so that the coefficient matrix becomes the identity.
+  \item The last column of the reduced matrix contains the solution vector.
+\end{enumerate}
+
+\subsection*{Pseudo-code}
+\begin{enumerate}
+  \item Input coefficient matrix $M$ and right-hand side vector $R$.
+  \item Construct augmented matrix $A = [M|R]$.
+  \item For each pivot index $p = 1 \to n$:
+  \begin{itemize}
+    \item For each row $r \neq p$, set 
+    \[
+    A(r,:) = A(r,:) - \frac{A(r,p)}{A(p,p)} \cdot A(p,:).
+    \]
+  \end{itemize}
+  \item Compute solution as $x_i = A(i,n+1)/A(i,i)$.
+  \item Output the solution vector.
+\end{enumerate}
+
+\section*{Results} 
+The given system of equations is:
+\[
+\begin{aligned}
+-76x + 25y + 50z &= -10, \\
+25x - 56y + 1z &= 0, \\
+50x + y - 106z &= 0.
+\end{aligned}
+\]
+
+The augmented matrix is:
+\[
+A =
+\begin{bmatrix}
+-76 & 25 & 50 & | & -10 \\
+25 & -56 & 1 & | & 0 \\
+50 & 1 & -106 & | & 0
+\end{bmatrix}.
+\]
+
+Applying Gauss–Jordan elimination reduces the matrix to diagonal form, from which the solution is read directly:
+\[
+x = 0.2449, \quad y = 0.1114, \quad z = 0.1166.
+\]
+
+\section*{Conclusion} 
+The Gauss–Jordan elimination method was applied to solve the system of three equations. Unlike standard Gaussian elimination, no back-substitution was necessary since the algorithm produced a diagonal system. The obtained values of $x$, $y$, and $z$ represent the loop currents in the given electrical circuit (clockwise in loops 1, 2, and 3 respectively), validating the method’s application to circuit analysis problems.
+

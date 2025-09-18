@@ -1,10 +1,13 @@
-%% AUTHOR: Sahil Raj
 %% Program to solve a System of Linear Equation using Gaussian Elimination
+%% using partial-pivoting
+
+%% AUTHOR: Sahil Raj
+%% Assignment 1 Problem 2
 
 clc; clear all;
 
-M = [ 1 1 1; 1 -2 2; 1 2 -1 ];
-R = [ 0 4 2 ]';
+M = [ 0 2 1; 1 -2 -2; -1 1 2 ];
+R = [ -8 0 3 ]';
 
 printf("Equations:\n")
 for i = 1:size(M, 1)
@@ -17,6 +20,11 @@ A = [ M R ]; % Augmented matrix
 printf("---------------------------------------------------\n")
 printf("The augmented matrix for gaussian elimination:\n");
 disp(A);
+
+printf("---------------------------------------------------\n")
+printf("The sorted matrix:\n")
+A = -sortrows(-A, 1);
+disp(A)
 
 printf("---------------------------------------------------\n")
 printf("Steps:\n")

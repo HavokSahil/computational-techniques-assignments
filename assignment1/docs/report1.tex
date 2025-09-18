@@ -1,0 +1,57 @@
+\section*{Problem Statement} 
+The objective of this problem is to solve a system of linear equations using the Gaussian elimination method. Given a coefficient matrix $M$ and a right-hand side vector $R$, we apply forward elimination to reduce the system to an upper-triangular form and then use back-substitution to obtain the solution.
+
+\section*{Methodology} 
+Gaussian elimination transforms the augmented matrix $[M|R]$ into row-echelon form by successively eliminating variables. For each pivot element, entries below it are zeroed out. The general procedure is:
+\begin{enumerate}
+  \item Form the augmented matrix $A = [M|R]$.
+  \item For each pivot column $p$:
+    \begin{itemize}
+      \item Normalize/eliminate entries below the pivot by subtracting suitable multiples of the pivot row.
+    \end{itemize}
+  \item Once in upper-triangular form, perform back-substitution:
+  \[
+  x_i = \frac{A_{i,n+1} - \sum_{j=i+1}^{n} A_{i,j}x_j}{A_{i,i}}.
+  \]
+\end{enumerate}
+
+\subsection*{Pseudo-code}
+\begin{enumerate}
+  \item Store $M$ and $R$.
+  \item Construct augmented matrix $A = [M|R]$.
+  \item For each pivot column $p = 1 \to n-1$:
+  \begin{itemize}
+    \item For each row $r > p$, eliminate $A(r,p)$ using row operations.
+  \end{itemize}
+  \item Perform back-substitution starting from the last row.
+  \item Output solution vector $X = [x,y,z]^T$.
+\end{enumerate}
+
+\section*{Results} 
+The given system is:
+\[
+\begin{aligned}
+x + y + z &= 0, \\
+x - 2y + 2z &= 4, \\
+x + 2y - z &= 2.
+\end{aligned}
+\]
+
+The augmented matrix is:
+\[
+A = 
+\begin{bmatrix}
+1 & 1 & 1 & | & 0 \\
+1 & -2 & 2 & | & 4 \\
+1 & 2 & -1 & | & 2
+\end{bmatrix}.
+\]
+
+After applying forward elimination, the system reduces to an upper-triangular form. Back-substitution yields the solution:
+\[
+x = 4.00, \quad y = -2.00, \quad z = -2.00.
+\]
+
+\section*{Conclusion} 
+Gaussian elimination was successfully applied to solve the system of equations. The method systematically reduces the system to an upper-triangular form, from which the solution can be obtained efficiently via back-substitution. The computed solution verifies the correctness of the algorithm implementation.
+

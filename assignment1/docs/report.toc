@@ -1,0 +1,5 @@
+\contentsline {chapter}{\numberline {1}Solution of Linear Equations using Gaussian Elimination}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Solution of Linear Equations using Gaussian Elimination with Partial Pivoting}{4}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Solution of Linear Equations using Gauss--Jordan Elimination}{6}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Solution of First-order Differential Equation using Gaussian Elimination}{8}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Solution of the Time-dependent Schrödinger Equation using Gauss--Jordan Elimination}{11}{chapter.5}%
