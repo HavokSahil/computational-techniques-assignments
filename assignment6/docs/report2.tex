@@ -1,0 +1,82 @@
+\section*{Problem Statement}  
+The objective of this problem is to solve the \textbf{particle in a box} quantum system numerically using the \textbf{central difference method}, compare it with the analytical solution, and normalize both wave functions using numerical integration.
+---
+
+\begin{quote}
+  \textbf{NOTE}: The code can be accessed using this link: \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a2.m}{MATLAB}, \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a2.jl}{Julia}.
+\end{quote}
+
+---
+
+\section*{Methodology}  
+
+\subsection*{Discretization and Finite Difference Scheme}  
+1. The spatial domain \([x_0, x_N] = [0, 4]\) is discretized into \(N = 300\) intervals with spacing
+\[
+dx = \frac{x_N - x_0}{N}.
+\]  
+2. The \textbf{internal grid points} (excluding boundaries) are used to construct a tridiagonal matrix representing the second derivative in the Schrödinger equation:
+\[
+A = \begin{bmatrix}
+2 & -1 & 0 & \dots & 0 \\
+-1 & 2 & -1 & \dots & 0 \\
+0 & -1 & 2 & \dots & 0 \\
+\vdots & \vdots & \vdots & \ddots & -1 \\
+0 & 0 & 0 & -1 & 2
+\end{bmatrix}.
+\]
+
+\subsection*{Eigenvalue Computation (Inverse Iteration)}  
+- A random initial wavefunction guess is iteratively updated using the inverse of \(A\) to find the smallest eigenvalue and corresponding eigenvector.  
+- The eigenvalue is computed as
+\[
+\lambda_{\text{min}} = \frac{\mathbf{wf}^T A \mathbf{wf}}{\mathbf{wf}^T \mathbf{wf}}.
+\]
+
+\subsection*{Wave Function Normalization}  
+- The numerical wave function is extended with zero boundary conditions at \(x_0\) and \(x_N\).  
+- Normalization is performed using the trapezoidal rule:
+\[
+\int_0^L |\psi(x)|^2 dx \approx \sum_{i=1}^{N} \frac{dx}{2} \Big[ |\psi(x_i)|^2 + |\psi(x_{i+1})|^2 \Big],
+\]
+with scaling factor \(a = \sqrt{1/I}\).  
+
+\subsection*{Analytical Solution}  
+- The analytical solution for the lowest energy state of a particle in a box of length \(L=4\) is
+\[
+\psi_{\text{analytical}}(x) = \sin\left(\frac{\pi x}{L}\right),
+\]  
+which is also normalized numerically using the trapezoidal rule.
+
+---
+
+\section*{Implementation Steps}  
+\begin{enumerate}
+    \item Define the spatial grid and grid spacing.
+    \item Construct the tridiagonal matrix representing the central difference approximation of the second derivative.
+    \item Apply inverse iteration to compute the smallest eigenvalue and eigenvector.
+    \item Extend the wave function with zero boundary conditions.
+    \item Normalize the numerical wave function using numerical integration.
+    \item Compute and normalize the analytical wave function.
+    \item Compare and visualize numerical vs analytical wave functions.
+\end{enumerate}
+
+---
+
+\section*{Results}  
+\begin{enumerate}
+    \item The numerical wave function matches closely with the analytical solution \(\psi(x) = \sin(\pi x / L)\).  
+    \item Both wave functions are normalized (\(\int_0^L |\psi(x)|^2 dx = 1\)).  
+\end{enumerate}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{a2.png}
+  \caption{Comparison of numerical (red solid) and analytical (black dashed) wave functions for the particle in a box.}
+\end{figure}
+
+---
+
+\section*{Conclusion}  
+The central difference method successfully computes the numerical wave function and lowest eigenvalue for a particle in a box. Normalization using numerical integration ensures the wave function has unit probability. The numerical solution agrees closely with the analytical \(\sin(\pi x / L)\) solution, demonstrating the accuracy and reliability of the finite difference approach for solving simple quantum systems.
+

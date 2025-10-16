@@ -1,0 +1,58 @@
+\section*{Problem Statement}  
+The objective of this problem is to \textbf{numerically integrate} the polynomial function
+\[
+f(x) = x^3 + 1
+\]
+over the interval \(x \in [1, 10]\) using the \textbf{trapezoidal rule}, compare it with the exact analytical integration, and quantify the numerical error.
+
+\begin{quote}
+  \textbf{NOTE}: The code can be accessed using this link: \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a1.m}{MATLAB}, \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a1.jl}{Julia}.
+\end{quote}
+
+\section*{Methodology}  
+
+\subsection*{Numerical Integration using Trapezoidal Rule}  
+\begin{enumerate}
+    \item \textbf{Discretization:} Divide the interval \([x_0, x_N]\) into \(N = 1000\) subintervals of width
+    \[
+    dx = \frac{x_N - x_0}{N}.
+    \]
+    \item \textbf{Trapezoidal Approximation:} Approximate the integral as
+    \[
+    I \approx \sum_{i=1}^{N-1} \frac{dx}{2} \Big[ f(x_i) + f(x_{i+1}) \Big].
+    \]
+\end{enumerate}
+
+\subsection*{Exact Integration}  
+The exact integral is computed analytically:
+\[
+\int_{x_0}^{x_N} (x^3 + 1) \, dx = \frac{x_N^4 - x_0^4}{4} + (x_N - x_0).
+\]
+
+\subsection*{Error Calculation}  
+The \textbf{absolute error} between numerical and exact results is
+\[
+e = |I_{\text{exact}} - I_{\text{numerical}}|.
+\]
+
+\section*{Implementation Steps}  
+\begin{enumerate}
+    \item Define the function \(f(x) = x^3 + 1\).
+    \item Divide the interval \([1,10]\) into \(N\) equal subintervals.
+    \item Apply the trapezoidal rule to compute the numerical integral.
+    \item Compute the exact integral analytically.
+    \item Calculate the absolute error.
+\end{enumerate}
+
+\section*{Results}  
+For \(N = 1000\) subintervals:
+
+\begin{itemize}
+    \item \textbf{Numerical Integration:} \(I \approx 2508.733882\)
+    \item \textbf{Exact Integration:} \(I_{\text{exact}} = 2508.750000\)
+    \item \textbf{Absolute Error:} \(e \approx 0.016118\)
+\end{itemize}
+
+\section*{Conclusion}  
+The trapezoidal rule provides an accurate numerical approximation for the integral of \(f(x) = x^3 + 1\) over the interval \([1,10]\). The absolute error is negligible for \(N = 1000\) subintervals, demonstrating the reliability of the method for smooth polynomial functions.
+

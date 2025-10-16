@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {Problem \thechapter:}       % prints "Problem n"
+  {10pt}                       % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]               % optional vertical space after
+
+\title{\textbf{Assignment 6}\\Numerical Methods: Integration and Quantum Mechanics}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Numerical Integration of a Polynomial Function}
+\input{report1.tex}  % Report for polynomial integration (Problem 1)
+
+\chapter{Particle in a Box: Finite Difference Solution and Normalization}
+\input{report2.tex}  % Report for particle in a box (Problem 2)
+
+\chapter{Numerical Evaluation of $\int_0^\infty \frac{\sin(x)}{x} dx$ Using Simpson's Methods}
+\input{report3.tex}  % Report for sinc integral (Problem 3)
+
+\chapter{Potential Due to a Uniformly Charged Solid Sphere}
+\input{report4.tex}  % Report for charged sphere potential (Problem 4)
+
+\end{document}
+

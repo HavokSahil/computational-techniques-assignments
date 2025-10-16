@@ -1,0 +1,79 @@
+\section*{Problem Statement}  
+The objective of this problem is to compute and visualize the \textbf{electric potential} due to a \textbf{uniformly charged solid sphere} of radius \(R\) and total charge \(Q\), using numerical integration and compare it with the analytical solution.
+
+---
+\begin{quote}
+  \textbf{NOTE}: The code can be accessed using this link: \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a4.m}{MATLAB}, \href{https://raw.githubusercontent.com/HavokSahil/computational-techniques-assignments/refs/heads/main/assignment6/a4.jl}{Julia}.
+\end{quote}
+---
+
+\section*{Methodology}  
+
+\subsection*{Problem Setup}  
+- Sphere radius: \(R = 1.0\)  
+- Total charge: \(Q = 1.0\)  
+- Radial domain: \(r \in [r_0, 10R]\) with \(r_0 = 0.01\) to avoid singularity at \(r=0\).  
+- Number of steps: \(N = 1000\) with step size
+\[
+dr = \frac{r_{\text{max}} - r_0}{N}.
+\]
+
+\subsection*{Numerical Integration of Potential}  
+- The potential outside a spherically symmetric charge distribution is
+\[
+V(r) = \int_r^{\infty} \frac{Q}{r'^2} \, dr'.
+\]  
+- The potential inside the sphere is
+\[
+V(r) = \frac{Q}{2 R} \left( 3 - \frac{r^2}{R^2} \right),
+\]  
+derived analytically for uniform charge density.  
+
+- Numerical integration is performed using a simple trapezoidal scheme in a recursive manner:
+\begin{enumerate}
+    \item Compute the potential at the outermost point (\(r = r_{\text{max}}\)) assuming it tends to zero at infinity.
+    \item Integrate inward for \(r > R\) using \(\int_r^\infty \frac{Q}{r^2} dr\).
+    \item For \(r < R\), use \(\frac{Q}{R^3} \int_0^r r \, dr\) to account for the charge within the radius.
+\end{enumerate}
+
+---
+
+\subsection*{Analytical Solution for Validation}  
+- Outside the sphere (\(r > R\)):
+\[
+V(r) = \frac{Q}{r}.
+\]  
+- Inside the sphere (\(r \le R\)):
+\[
+V(r) = \frac{Q}{2R} \left( 3 - \frac{r^2}{R^2} \right).
+\]  
+
+---
+
+\section*{Implementation Steps}  
+\begin{enumerate}
+    \item Define radial grid \(r_i = r_0 + i \cdot dr\).  
+    \item Compute numerical potential recursively using trapezoidal integration.  
+    \item Compute analytical potential on a fine grid for validation.  
+    \item Plot numerical and analytical solutions on the same figure.  
+    \item Enhance visualization with labels, legend, and line widths.  
+\end{enumerate}
+
+---
+
+\section*{Results}  
+\begin{enumerate}
+    \item The numerical potential closely follows the analytical potential both inside and outside the sphere.  
+    \item The potential decreases with \(1/r\) outside the sphere and varies quadratically inside.
+\end{enumerate}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{a4.png}
+  \caption{Electric potential \(V(r)\) of a uniformly charged solid sphere. Red line: numerical solution; black dashed line: analytical solution.}
+\end{figure}
+
+---
+
+\section*{Conclusion}  
+Numerical integration accurately computes the electric potential due to a uniformly charged solid sphere. Comparison with the analytical solution demonstrates excellent agreement, validating the numerical approach. The method correctly reproduces the expected quadratic variation inside the sphere and \(1/r\) decay outside.
+
