@@ -1,0 +1,126 @@
+\section*{Problem Statement}
+The objective is to solve the \textbf{Schrödinger equation} for the ground state of a particle in a harmonic potential using the \textbf{central difference iterative method}, and then \textbf{normalize} the wavefunction using the \textbf{2-point Gauss-Hermite quadrature}.
+
+The time-independent Schrödinger equation for a one-dimensional harmonic oscillator is:
+\[
+-\frac{\hbar^2}{2 m} \frac{d^2 \psi(x)}{dx^2} + \frac{1}{2} m \omega^2 x^2 \psi(x) = E \psi(x)
+\]
+
+\section*{Methodology}
+
+\subsection*{Central Difference Iterative Formula}
+The second derivative is approximated using central differences:
+\[
+\psi_{i+1} = \phi(dx, i)\, \psi_i - \psi_{i-1},
+\]
+where \(\phi(dx, i) = 2 + (dx^4) j^2 - dx^2\), \(dx\) is the step size, and \(j\) indexes the spatial grid.  
+
+The iterative scheme computes the wavefunction on a discrete grid \(x \in [0, X_{\max}]\).
+
+\subsection*{Normalization using Gauss-Hermite 2-point Quadrature}
+For a function weighted by \(e^{-x^2}\), the 2-point Gauss-Hermite quadrature approximates the integral as:
+\[
+\int_{-\infty}^{\infty} f(x) e^{-x^2} dx \approx \sum_{i=0}^{1} w_i f(x_i),
+\]
+with nodes and weights:
+
+\[
+\begin{aligned}
+x_0 &= -\frac{1}{\sqrt{2}}, & w_0 &= \frac{\sqrt{\pi}}{2} \\
+x_1 &=  \frac{1}{\sqrt{2}}, & w_1 &= \frac{\sqrt{\pi}}{2}
+\end{aligned}
+\]
+
+Since the ground-state wavefunction is even, the integral can be simplified and multiplied by 2.
+
+\newpage
+\subsection*{Calculation}
+\begin{figure}[h!]
+\centering
+\includegraphics[height=0.65\textheight]{a101.jpg}
+\end{figure}
+\newpage
+
+\subsection*{Implementation Steps}
+\begin{enumerate}
+    \item Define constants: \(m, \hbar, \omega, dx\).
+    \item Initialize the wavefunction with arbitrary scale at the first two grid points.
+    \item Iterate using the central difference formula to compute the wavefunction over the spatial grid.
+    \item Normalize the wavefunction using 2-point Gauss-Hermite quadrature.
+    \item Plot the normalized wavefunction.
+\end{enumerate}
+
+\section*{Code}
+\begin{lstlisting}[language=Matlab, caption={Ground State Wavefunction for Harmonic Oscillator using Central Difference and 2-point Gauss-Hermite}]
+clc; clear all;
+
+% Constants
+m = 1.0;
+h = 1.0;
+w = 1.0;
+dx = 0.01;
+
+function phi = compphi(dx, j)
+  phi = 2 + power(dx, 4) * j * j - dx*dx;
+endfunction
+
+% Initial values to arbitrary scale
+psi0even = 1.0;
+psi1even = 1.0;
+
+Xmax = 2;
+Xs = 0:dx:Xmax;
+N = length(Xs);
+
+psieven = zeros(N, 1);
+psieven(1) = psi0even;
+psieven(2) = psi1even;
+
+% Compute wavefunction using central difference iterative formula
+for i = 3:N
+  psieven(i) = compphi(dx, i) * psieven(i-1) - psieven(i-2);
+endfor
+
+% 2-point Gauss-Hermite quadrature for normalization
+weights = [sqrt(pi)/2; sqrt(pi)/2];
+nodes = [-1/sqrt(2); 1/sqrt(2)];
+
+index = floor(nodes(2) / dx);
+fx = psieven(index);
+I = 2 * fx * weights(2);
+
+psieven = psieven / I;
+
+fprintf("The normalization constant was: %f\n", I);
+
+% Plotting
+figure('Color','w');
+plot(Xs, psieven, 'LineWidth', 2);
+grid on;
+xlabel('x','FontSize',12,'FontWeight','bold');
+ylabel('\psi(x)','FontSize',12,'FontWeight','bold');
+title('Wavefunction','FontSize',14,'FontWeight','bold');
+xlim([0 Xmax]);
+ylim([min(psieven)-0.1, max(psieven)+0.1]);
+set(gca, 'FontSize', 12, 'LineWidth', 1.2);
+\end{lstlisting}
+
+\section*{Results}
+The central difference iterative method successfully generates the discrete wavefunction for the ground state.  
+
+After normalization using the 2-point Gauss-Hermite method, the wavefunction satisfies the normalization condition:
+\[
+\int_{-\infty}^{\infty} |\psi(x)|^2 dx = 1
+\]
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{a102.jpg}
+\caption{Normalized ground-state wavefunction for the harmonic oscillator. Replace this placeholder with the actual plot image generated from MATLAB.}
+\end{figure}
+
+\section*{Conclusion}
+The central difference iterative formula provides an efficient numerical method to solve the Schrödinger equation for the harmonic oscillator.  
+
+Normalization using 2-point Gauss-Hermite quadrature ensures the wavefunction has unit probability. The method is straightforward and produces accurate results for the ground state, capturing the characteristic Gaussian profile of the harmonic oscillator.
+

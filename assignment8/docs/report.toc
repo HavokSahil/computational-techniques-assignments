@@ -1,0 +1,10 @@
+\contentsline {chapter}{\numberline {1}Gauss-Legendre Quadrature}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Gauss-Laguerre Quadrature}{4}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Gauss-Hermite Quadrature}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {4}5-Point Gauss-Laguerre Integration}{10}{chapter.4}%
+\contentsline {chapter}{\numberline {5}3-Point Gauss-Laguerre Integration}{13}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Gauss-Hermite: Nodes \& Weights}{16}{chapter.6}%
+\contentsline {chapter}{\numberline {7}3-Point Hermite Evaluation}{19}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Gaussian Quadrature Error Analysis}{22}{chapter.8}%
+\contentsline {chapter}{\numberline {9}H-Atom Schrödinger Solution}{24}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Harmonic Oscillator Schrödinger Solution}{27}{chapter.10}%

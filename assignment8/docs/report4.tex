@@ -1,0 +1,102 @@
+\section*{Problem Statement}
+The goal is to \textbf{numerically evaluate} the integral
+\[
+\int_{0}^{\infty} \frac{e^{-x}}{1 + x^2} \, dx
+\]
+using the \textbf{5-point Gauss-Laguerre quadrature} method.  
+Gauss-Laguerre quadrature is particularly suited for integrals of the form
+\(\int_{0}^{\infty} e^{-x} g(x) \, dx\).
+
+\section*{Methodology}
+
+\subsection*{Gauss-Laguerre Quadrature (5-point)}
+For a function of the form
+\[
+\int_{0}^{\infty} e^{-x} f(x)\, dx,
+\]
+the 5-point Gauss-Laguerre quadrature approximates the integral as
+\[
+I \approx \sum_{i=0}^{4} w_i \, f(x_i),
+\]
+where \(x_i\) are the Laguerre nodes and \(w_i\) are the corresponding weights.
+
+The 5-point nodes and weights used are:
+
+\[
+\begin{aligned}
+x_0 &= 0.26356, & w_0 &= 0.521756 \\
+x_1 &= 1.4134,  & w_1 &= 0.398667 \\
+x_2 &= 3.59643, & w_2 &= 0.0759424 \\
+x_3 &= 7.08581, & w_3 &= 0.00361176 \\
+x_4 &= 12.6408, & w_4 &= 0.00002337
+\end{aligned}
+\]
+
+\subsection*{Integrand}
+The integrand is
+\[
+f(x) = \frac{1}{1 + x^2}.
+\]
+
+\subsection*{Implementation Steps}
+\begin{enumerate}
+    \item Store the 5 Gauss-Laguerre nodes and weights.
+    \item Define the integrand \(f(x) = 1/(1+x^2)\).
+    \item Compute the weighted sum:
+    \[
+    I = \sum_{i=0}^{4} w_i \, f(x_i)
+    \]
+    \item Display the final numerical value.
+\end{enumerate}
+
+\section*{Code}
+\begin{lstlisting}[language=Matlab, caption={5-point Gauss-Laguerre Quadrature for $e^{-x}/(1+x^2)$}]
+clc; clear all;
+
+%% Program to compute the integral of fn exp(-x) / (1 + x^2)
+% using 5-point Gauss-Laguerre technique
+%
+% Author: Sahil Raj
+% Assignment 8 Problem 4
+
+weights = [
+  0.521756;
+  0.398667;
+  0.0759424;
+  0.00361176;
+  0.00002337;
+];
+
+nodes = [
+  0.26356;
+  1.4134;
+  3.59643;
+  7.08581;
+  12.6408;
+];
+
+fn = @(x) 1/(1 + power(x, 2));
+
+I = 0.0;
+for i = 1:5
+  I = I + weights(i) * fn(nodes(i));
+end
+
+fprintf("The value of the integral is: %f", I);
+\end{lstlisting}
+
+\section*{Results}
+The numerical integration using 5-point Gauss-Laguerre quadrature gives:
+
+\begin{itemize}
+    \item \textbf{Integral Value:} \(I \approx 0.626379\)
+\end{itemize}
+
+\section*{Conclusion}
+The 5-point Gauss-Laguerre quadrature provides an efficient and accurate method to evaluate
+\[
+\int_{0}^{\infty} \frac{e^{-x}}{1 + x^2} \, dx.
+\]
+
+For integrals of the type \(\int_{0}^{\infty} e^{-x} g(x) dx\), this method achieves high precision with very few nodes. The computed integral closely approximates the expected analytical value, demonstrating the effectiveness of Gauss-Laguerre quadrature for exponentially weighted integrals.
+

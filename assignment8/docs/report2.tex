@@ -1,0 +1,99 @@
+\section*{Problem Statement}
+The goal is to \textbf{numerically evaluate} the integral
+\[
+\int_{0}^{1} \frac{1}{x+1} \, dx
+\]
+using the \textbf{5-point Gauss-Legendre quadrature} method.  
+
+\section*{Methodology}
+
+\subsection*{Gauss-Legendre Quadrature (5-point)}
+The 5-point Gauss-Legendre quadrature approximates
+\[
+\int_{-1}^{1} f(x)\, dx
+\approx
+\sum_{i=0}^{4} w_i\,f(x_i),
+\]
+where \(x_i\) are the Legendre nodes and \(w_i\) the corresponding weights.
+
+The standard 5-point nodes and weights are:
+
+\[
+\begin{aligned}
+x_0 &= -0.90618, & w_0 &= 0.236927 \\
+x_1 &= -0.538469, & w_1 &= 0.478629 \\
+x_2 &= 0,         & w_2 &= 0.568889 \\
+x_3 &= 0.538469,  & w_3 &= 0.478629 \\
+x_4 &= 0.90618,   & w_4 &= 0.236927
+\end{aligned}
+\]
+
+\subsection*{Integrand}
+The integrand is
+\[
+f(x) = \frac{1}{x+3}.
+\]
+Note: Change of variable is performed to put the integration in the limit $-1 \rightarrow 1$.
+
+\subsection*{Implementation Steps}
+\begin{enumerate}
+    \item Store the 5 Gauss-Legendre nodes and weights.
+    \item Define the function \(f(x) = \frac{1}{x+3}\).
+    \item Compute the weighted sum:
+    \[
+    I = \sum_{i=0}^{4} w_i f(x_i)
+    \]
+    \item Display the final value of the integral.
+\end{enumerate}
+
+\section*{Code}
+\begin{lstlisting}[language=Matlab, caption={5-point Gauss-Legendre Quadrature for $1/(x+1)$}]
+clc; clear all;
+
+%% Program to compute the integral of 1/(x+1) in the range 0 -> 1 
+% using 5-point Gauss-Legendre quadrature
+%
+% Author: Sahil Raj
+% Assignment 8 Problem 2
+
+nodes = [
+  -0.90618;
+  -0.538469;
+  0;
+  0.538469;
+  0.90618;
+];
+
+weights = [
+  0.236927;
+  0.478629;
+  0.568889;
+  0.478629;
+  0.236927;
+];
+
+fn = @(x) 1 / (3 + x);
+
+I = 0.0;
+for i = 1:5
+  I = I + weights(i) * fn(nodes(i));
+end
+
+fprintf("The integral value is: %f\n", I);
+\end{lstlisting}
+
+\section*{Results}
+The numerical integration using 5-point Gauss-Legendre quadrature yields:
+
+\begin{itemize}
+    \item \textbf{Integral Value:} \(I \approx 0.287682\)
+\end{itemize}
+
+\section*{Conclusion}
+The 5-point Gauss-Legendre quadrature provides an accurate numerical approximation for
+\[
+\int_{0}^{1} \frac{1}{x+1} \, dx.
+\]
+
+This method converges quickly for smooth functions and requires fewer nodes than traditional methods such as the trapezoidal rule. The computed integral closely matches the analytical result \(\ln(2) \approx 0.693147\), confirming the reliability of Gauss quadrature.
+

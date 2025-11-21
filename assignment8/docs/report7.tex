@@ -1,0 +1,101 @@
+\section*{Problem Statement}
+The objective is to \textbf{numerically evaluate} the integral
+\[
+\int_{-\infty}^{\infty} \frac{e^{-x^2}}{1 + x + x^2} \, dx
+\]
+using the \textbf{5-point Gauss-Hermite quadrature} method.  
+
+Gauss-Hermite quadrature is suited for integrals of the form
+\(\int_{-\infty}^{\infty} e^{-x^2} g(x) \, dx\), which matches the given problem.
+
+\section*{Methodology}
+
+\subsection*{Gauss-Hermite Quadrature (5-point)}
+For a function of the form
+\(\int_{-\infty}^{\infty} e^{-x^2} f(x)\, dx\), the 5-point Gauss-Hermite quadrature approximates the integral as
+\[
+I \approx \sum_{i=0}^{4} w_i \, f(x_i),
+\]
+where \(x_i\) are the Hermite nodes and \(w_i\) are the corresponding weights.
+
+The 5-point nodes and weights used are:
+
+\[
+\begin{aligned}
+x_0 &= -2.02018, & w_0 &= 0.0199532 \\
+x_1 &= -0.958572, & w_1 &= 0.393619 \\
+x_2 &= 0,          & w_2 &= 0.945309 \\
+x_3 &= 0.958572,   & w_3 &= 0.393619 \\
+x_4 &= 2.02018,    & w_4 &= 0.0199532
+\end{aligned}
+\]
+
+\subsection*{Integrand}
+The integrand is
+\[
+f(x) = \frac{1}{1 + x + x^2}.
+\]
+
+\subsection*{Implementation Steps}
+\begin{enumerate}
+    \item Store the 5 Gauss-Hermite nodes and weights.
+    \item Define the integrand \(f(x) = 1/(1 + x + x^2)\).
+    \item Compute the weighted sum:
+    \[
+    I = \sum_{i=0}^{4} w_i \, f(x_i)
+    \]
+    \item Display the final value of the integral.
+\end{enumerate}
+
+\section*{Code}
+\begin{lstlisting}[language=Matlab, caption={5-point Gauss-Hermite Quadrature for $e^{-x^2}/(1+x+x^2)$}]
+clc; clear all;
+
+%% Program to compute the integral of exp(-x^2) / (1 + x + x^2)
+% using Gauss-Hermite 5-point quadrature
+%
+% Author: Sahil Raj
+% Assignment 8 Problem 7
+
+fn = @(x) 1/(1 + x + power(x, 2));
+
+nodes = [
+  -2.02018;
+  -0.958572;
+   0;
+   0.958572;
+   2.02018;
+];
+
+weights = [
+  0.0199532;
+  0.393619;
+  0.945309;
+  0.393619;
+  0.0199532;
+];
+
+I = 0.0;
+
+for i = 1:5
+  I = I + weights(i) * fn(nodes(i));
+end
+
+fprintf("The integral of the function is: %f\n", I);
+\end{lstlisting}
+
+\section*{Results}
+The numerical integration using 5-point Gauss-Hermite quadrature gives:
+
+\begin{itemize}
+    \item \textbf{Integral Value:} \(I \approx 1.501329\)
+\end{itemize}
+
+\section*{Conclusion}
+The 5-point Gauss-Hermite quadrature efficiently approximates
+\[
+\int_{-\infty}^{\infty} \frac{e^{-x^2}}{1 + x + x^2} \, dx.
+\]
+
+Gauss-Hermite quadrature is particularly effective for integrals with the weight function \(e^{-x^2}\), achieving high accuracy with only a few nodes. The computed integral demonstrates the method’s reliability for smooth functions over \((-\infty, \infty)\).
+
