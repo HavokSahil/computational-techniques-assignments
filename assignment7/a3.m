@@ -1,0 +1,98 @@
+%% Program to compute the expansion of the given
+%% function in terms of legendre polynomials
+%%
+%% Author: Sahil Raj
+%% Assignment 7 Problem 3
+
+clc; clear all;
+
+% Load data
+T = dlmread("Guitar_Theta_R.txt", "\t");
+A = T(:,1);   % angles in degrees
+D = T(:,2);   % distances
+
+theta = deg2rad(A);
+x = cos(theta);
+
+% Gauss-Legendre quadrature nodes and weights (10-point)
+xi = [
+  -0.9739065285;
+  -0.8650633666;
+  -0.6794095682;
+  -0.4333953941;
+  -0.1488743389;
+   0.1488743389;
+   0.4333953941;
+   0.6794095682;
+   0.8650633666;
+   0.9739065285
+];
+wi = [
+   0.0666713443;
+   0.1494513491;
+   0.2190863625;
+   0.2692667193;
+   0.2955242247;
+   0.2955242247;
+   0.2692667193;
+   0.2190863625;
+   0.1494513491;
+   0.0666713443
+];
+
+% Interpolation function R(x)
+function Rval = computeR(xval, xdata, Ddata)
+    % Interpolate using pchip for stability
+    Rval = interp1(xdata, Ddata, xval, 'pchip', 'extrap');
+endfunction
+
+% Legendre polynomial using recurrence
+function Pl = legendre_numeric(l, x)
+    if l == 0
+        Pl = 1;
+        return;
+    elseif l == 1
+        Pl = x;
+        return;
+    end
+    P0 = 1;
+    P1 = x;
+    for n = 1:l-1
+        Pn1 = ((2*n+1) * x .* P1 - n * P0)/(n+1);
+        P0 = P1;
+        P1 = Pn1;
+    end
+    Pl = P1;
+endfunction
+
+% Compute coefficients
+maxL = 15;      % maximum Legendre order
+C = zeros(maxL+1,1);
+for l = 0:maxL
+    sumval = 0.0;
+    for i = 1:length(xi)
+        Rval = computeR(xi(i), x, D);
+        Pl = legendre_numeric(l, xi(i));
+        sumval = sumval + wi(i) * Rval * Pl;
+    end
+    C(l+1) = (2*l+1)/2 * sumval;   % normalization factor for P_l
+end
+
+% Reconstruct R(theta) from Legendre expansion
+theta_plot = linspace(min(theta), max(theta), 300);
+x_plot = cos(theta_plot);
+R_rec = zeros(size(x_plot));
+for l = 0:maxL
+    R_rec = R_rec + C(l+1) * legendre_numeric(l, x_plot);
+end
+
+% Plot
+figure;
+plot(rad2deg(theta_plot), R_rec, 'r-', 'LineWidth', 2); hold on;
+plot(A, D, 'bo');
+xlabel('Angle (degrees)');
+ylabel('R(\theta)');
+title('Radial Function and Legendre Expansion Approximation');
+legend('Reconstructed R(\theta)','Original Data');
+grid on;
+

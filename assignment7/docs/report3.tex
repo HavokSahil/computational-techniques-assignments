@@ -1,0 +1,74 @@
+\section*{Problem Statement}  
+The objective of this problem is to \textbf{represent a given radial function} \(R(\theta)\) in terms of \textbf{Legendre polynomials} and reconstruct it using a finite number of terms.  
+The input data consists of angles \(\theta\) (in degrees) and corresponding radial distances \(R(\theta)\) stored in `Guitar\_Theta\_R.txt`.
+
+\section*{Methodology}  
+
+\subsection*{Data Preparation}  
+\begin{enumerate}
+    \item Load the data file containing angles \(A\) and radial distances \(D\).  
+    \item Convert angles to radians: \(\theta = \text{deg2rad}(A)\).  
+    \item Compute \(x = \cos(\theta)\), which maps the angular data to the domain of Legendre polynomials \([-1,1]\).
+\end{enumerate}
+
+\subsection*{Legendre Polynomial Expansion}  
+The function \(R(\theta)\) is expanded in terms of Legendre polynomials \(P_l(x)\) as:
+
+\[
+R(x) \approx \sum_{l=0}^{L} C_l \, P_l(x)
+\]
+
+where \(C_l\) are the expansion coefficients.  
+
+\textbf{Coefficient Calculation using Gauss-Legendre Quadrature:}  
+\begin{enumerate}
+    \item Use 10-point Gauss-Legendre quadrature nodes \(\xi_i\) and weights \(w_i\) over \([-1,1]\).  
+    \item Interpolate the radial function at the nodes using `pchip` for stability: \(R(\xi_i)\).  
+    \item Compute each coefficient:
+
+    \[
+    C_l = \frac{2l+1}{2} \sum_{i=1}^{10} w_i \, R(\xi_i) \, P_l(\xi_i)
+    \]
+
+    \item Maximum Legendre order used: \(L = 15\).
+\end{enumerate}
+
+\subsection*{Reconstruction}  
+\begin{enumerate}
+    \item Create a fine grid of angles \(\theta_{\text{plot}}\) and corresponding \(x_{\text{plot}} = \cos(\theta_{\text{plot}})\).  
+    \item Reconstruct \(R_{\text{rec}}(\theta)\) from the Legendre expansion:
+
+    \[
+    R_{\text{rec}}(x) = \sum_{l=0}^{L} C_l \, P_l(x)
+    \]
+\end{enumerate}
+
+\subsection*{Implementation Notes}  
+\begin{itemize}
+    \item Legendre polynomials are computed using the recurrence relation:
+
+    \[
+    P_0(x) = 1, \quad P_1(x) = x, \quad P_{n+1}(x) = \frac{(2n+1)xP_n(x) - n P_{n-1}(x)}{n+1}
+    \]
+
+    \item Interpolation using `pchip` ensures smooth reconstruction even if data points are unevenly spaced.
+\end{itemize}
+
+\section*{Results}  
+
+\begin{itemize}
+    \item The Legendre coefficients \(C_l\) capture the contribution of each polynomial to the overall function.  
+    \item The reconstructed function \(R_{\text{rec}}(\theta)\) closely matches the original data \(R(\theta)\), demonstrating the accuracy of the expansion.
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+    \includegraphics[width=0.9\textwidth]{a3.png}
+\caption{Reconstructed radial function \(R(\theta)\) using Legendre polynomial expansion (red) compared with original data (blue circles).}
+\end{figure}
+
+\section*{Conclusion}  
+The Legendre polynomial expansion successfully approximates the given radial function using a finite number of terms.  
+The Gauss-Legendre quadrature provides an efficient method to compute expansion coefficients.  
+The reconstructed function closely follows the original data, validating the approach for smooth angular functions.
+

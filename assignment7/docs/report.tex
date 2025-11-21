@@ -1,0 +1,99 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+
+\usepackage{xcolor}        % Optional, for syntax highlighting
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    breakatwhitespace=true,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    tabsize=4
+}
+
+\lstset{style=mystyle, language=Matlab}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {Problem \thechapter:}       % prints "Problem n"
+  {10pt}                       % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]               % optional vertical space after
+
+\title{\textbf{Assignment 7}\\Numerical Methods: Gauss Quadrature and Legendre Expansions}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Numerical Integration of \(\frac{8(x+3)}{16+(x+3)^4}\) Using 4-Point Gauss Quadrature}
+\input{report1.tex}  % Report for Problem 1: Gauss Quadrature for first function
+
+\chapter{Numerical Integration of \(\frac{1}{x+1}\) in [0,1] Using 4-Point Gauss Quadrature with Variable Change}
+\input{report2.tex}  % Report for Problem 2: Gauss Quadrature after mapping
+
+\chapter{Expansion of a Radial Function in Terms of Legendre Polynomials}
+\input{report3.tex}  % Report for Problem 3: Legendre polynomial expansion
+
+\chapter{Demonstrating the Orthogonality of the Legenedre Polynomials using Gauss 3-Point Quadrature}
+\input{report4.tex}
+
+\chapter{Spherically Symmetric Gaussian Charge Distribution}
+\input{report5.tex}
+
+\appendix
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries}
+  {Appendix \thechapter:}
+  {10pt}
+  {\Large}
+  [\vspace{1ex}]
+
+
+\chapter{Octave Code for Problem 1}
+\input{code1.tex}
+\chapter{Octave Code for Problem 2}
+\input{code2.tex}
+\chapter{Octave Code for Problem 3}
+\input{code3.tex}
+\chapter{Octave Code for Problem 4}
+\input{code4.tex}
+\chapter{Octave Code for Problem 5}
+\input{code5.tex}
+
+\end{document}
+

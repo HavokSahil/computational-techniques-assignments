@@ -1,0 +1,154 @@
+\section*{Problem Statement}
+A spherically symmetric charge distribution is given by
+\[
+\rho(r) = \rho_0 \, e^{-r^2/a^2},
+\]
+where \(\rho_0\) is the central charge density, \(a\) is a characteristic length scale, and \(r\) is the radial distance from the centre.
+
+\begin{enumerate}
+  \item[(a)] Calculate the total charge \(Q\) contained in the entire space.
+  \item[(b)] Find the electric field \(E(r)\) at a distance \(r\) from the centre using Gauss's law.
+\end{enumerate}
+
+\section*{Analytic Calculations}
+
+\subsection*{(a) Total charge \(Q\)}
+Total charge is
+\[
+Q \;=\; \int_{\mathbb{R}^3} \rho(r)\, dV
+    \;=\; 4\pi \int_{0}^{\infty} \rho(r)\, r^2\, dr
+    \;=\; 4\pi \rho_0 \int_0^\infty r^2 e^{-r^2/a^2}\, dr.
+\]
+
+Use the standard integral
+\[
+\int_0^\infty r^2 e^{-\alpha r^2}\,dr \;=\; \frac{\sqrt{\pi}}{4}\,\alpha^{-3/2},\qquad (\Re\alpha>0).
+\]
+With \(\alpha = 1/a^2\) we get
+\[
+\int_0^\infty r^2 e^{-r^2/a^2}\,dr
+= \frac{\sqrt{\pi}}{4}\,(1/a^2)^{-3/2}
+= \frac{\sqrt{\pi}}{4}\,a^3.
+\]
+
+Therefore the total charge is
+\[
+\boxed{ \; Q \;=\; 4\pi \rho_0 \cdot \frac{\sqrt{\pi}}{4}\,a^3
+        \;=\; \rho_0\,\pi^{3/2}\,a^3 \; }.
+\]
+
+This is the exact analytic result.
+
+\subsection*{(b) Electric field \(E(r)\) via Gauss's law}
+By spherical symmetry, the electric field points radially and (for \(r>0\)) Gauss's law gives
+\[
+E(r) \, (4\pi r^2) \;=\; \frac{Q_{\mathrm{enc}}(r)}{\varepsilon_0},
+\]
+so
+\[
+E(r) \;=\; \frac{1}{4\pi\varepsilon_0}\,\frac{Q_{\mathrm{enc}}(r)}{r^2},
+\]
+where
+\[
+Q_{\mathrm{enc}}(r) \;=\; 4\pi \rho_0 \int_0^r r'^2 e^{-r'^2/a^2}\,dr'.
+\]
+
+Evaluate the radial integral. Let \(t=r'/a\). Then
+\[
+\int_0^r r'^2 e^{-r'^2/a^2}\,dr'
+= a^3\int_0^{r/a} t^2 e^{-t^2}\,dt.
+\]
+Use the antiderivative
+\[
+\int t^2 e^{-t^2}\,dt \;=\; \frac{\sqrt{\pi}}{4}\,\operatorname{erf}(t) - \frac{t}{2} e^{-t^2},
+\]
+so
+\[
+\int_0^{r/a} t^2 e^{-t^2}\,dt
+= \frac{\sqrt{\pi}}{4}\,\operatorname{erf}\!\left(\frac{r}{a}\right)
+- \frac{r}{2a} e^{-r^2/a^2}.
+\]
+Hence
+\[
+Q_{\mathrm{enc}}(r)
+= 4\pi \rho_0 a^3\left[
+    \frac{\sqrt{\pi}}{4}\,\operatorname{erf}\!\left(\frac{r}{a}\right)
+    - \frac{r}{2a}\,e^{-r^2/a^2}
+    \right].
+\]
+
+This simplifies to
+\[
+Q_{\mathrm{enc}}(r)
+= \rho_0 \left[ \pi^{3/2} a^3 \operatorname{erf}\!\left(\frac{r}{a}\right)
+    \;-\; 2\pi a^2 r \, e^{-r^2/a^2} \right]
+\]
+
+Substituting into Gauss's law gives
+\[
+E(r) = \frac{1}{4\pi\varepsilon_0}\frac{Q_{\mathrm{enc}}(r)}{r^2}
+= \frac{\rho_0}{4\pi\varepsilon_0}\left[
+    \frac{\pi^{3/2} a^3}{r^2}\operatorname{erf}\!\left(\frac{r}{a}\right)
+    - \frac{2\pi a^2}{r} e^{-r^2/a^2}
+    \right].
+\]
+This expression reduces to the expected behaviours:
+\begin{itemize}
+  \item As \(r\to 0\), series expansion shows \(E(r)\propto r\) (regular at origin).
+  \item As \(r\to\infty\), \(\operatorname{erf}(r/a)\to 1\) and the second term vanishes, giving
+  \[
+  E(r)\xrightarrow{r\to\infty} \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}
+  \quad\text{with}\quad Q=\rho_0\pi^{3/2}a^3,
+  \]
+  i.e. a point-charge behaviour at large distances.
+\end{itemize}
+
+\section*{Numerical Approach (Octave Code)}
+
+\subsection*{Integral formulation used in the code}
+The code numerically evaluates a radial integral of the form
+\[
+I(R) = \int_{-1}^{1} p^2 \, \exp\!\big(-R^2 p^2/a^2\big)\, dp,
+\]
+using a 4-point Gauss–Legendre quadrature on the interval \([-1,1]\):
+\[
+I(R)\approx \sum_{k=1}^{4} w_k\, p_k^2 e^{-R^2 p_k^2/a^2},
+\]
+where \(p_k\) and \(w_k\) are the Gauss–Legendre nodes and weights (exact forms used in the code).
+
+The code forms the electric field as
+\[
+E(R) \;=\; \frac{\rho_0 R}{2\varepsilon_0}\, I(R),
+\]
+which is equivalent to using an appropriate change of variables to reduce the enclosed-charge integral to this form.
+
+\subsection*{Quadrature rules used}
+\begin{itemize}
+  \item 4-point Gauss–Legendre: exact for polynomials up to degree 7; exact nodes/weights used in closed form.
+  \item 2-point Gauss–Hermite (used for checking the total charge numerically): nodes \(\pm 1/\sqrt{2}\) with weights \(\sqrt{\pi}/2\).
+\end{itemize}
+
+\section*{Results}
+
+\subsection*{Analytic values}
+Using the analytic formulas with \(\rho_0 = 1\), \(a=1\) and \(\varepsilon_0=1\) (the same nondimensional choices used in the code) we have:
+\[
+Q_{\text{analytic}} = \pi^{3/2}\, a^3 \rho_0 = \pi^{3/2} \approx 5.568327\quad (\text{for }a=\rho_0=1).
+\]
+
+The analytic electric field is given by the boxed expression above; it can be evaluated numerically for a grid of \(r\) values for comparison with the code.
+
+\subsection*{Numerical evaluation (from the code)}
+The provided Octave script computes:
+\begin{itemize}
+  \item a numerical estimate of the total charge \(Q\) (via a quadrature used in the code),
+  \item \(E(R)\) on a grid \(R\in[0.1,10]\) using the 4-point Gauss–Legendre evaluation described above,
+  \item and plots \(E(R)\) versus \(R\).
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{a5.jpg}
+    \caption{Electric field \(E(r)\) (computed numerically).} 
+\end{figure}
+

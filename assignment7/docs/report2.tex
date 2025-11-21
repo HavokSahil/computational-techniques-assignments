@@ -1,0 +1,60 @@
+\section*{Problem Statement}  
+The objective of this problem is to \textbf{numerically integrate} the function
+\[
+f(x) = \frac{1}{x+1}
+\]
+over the interval \(x \in [0, 1]\) using the \textbf{4-point Gauss-Legendre quadrature} method.  
+Since Gauss-Legendre nodes are defined over \([-1,1]\), a \textbf{change of variables} is applied to transform the interval \([0,1]\) to \([-1,1]\).
+
+\section*{Methodology}  
+
+\subsection*{Change of Variables}  
+The interval \([0,1]\) is mapped to \([-1,1]\) using
+\[
+x = \frac{b-a}{2} t + \frac{b+a}{2} = \frac{t+1}{2}, \quad dx = \frac{1}{2} dt
+\]  
+where \(t \in [-1,1]\) represents the standard Gauss-Legendre variable.  
+The transformed integral becomes:
+\[
+\int_0^1 \frac{1}{x+1} \, dx = \frac{1}{2} \sum_{i=0}^{3} w_i \, f\Big(\frac{t_i+1}{2}\Big)
+= \sum_{i=0}^{3} w_i \, \frac{1}{t_i + 3} 
+\]
+
+\subsection*{Gauss-Legendre Quadrature (4-point)}  
+The 4-point Gauss-Legendre quadrature approximates the integral as a weighted sum of function values at specific nodes:
+
+\[
+I \approx \sum_{i=0}^{3} w_i \, f(x_i)
+\]
+
+with precomputed nodes and weights:
+
+\[
+\begin{aligned}
+x_0 &= -0.86114, & w_0 &= 0.34785 \\
+x_1 &= -0.33998, & w_1 &= 0.65215 \\
+x_2 &=  0.33998, & w_2 &= 0.65215 \\
+x_3 &=  0.86114, & w_3 &= 0.34785
+\end{aligned}
+\]
+
+\subsection*{Implementation Steps}  
+\begin{enumerate}
+    \item Define the mapped function \(f(t) = \frac{1}{t+3}\).
+    \item Specify the 4 Gauss-Legendre nodes and weights.
+    \item Compute the weighted sum \(I = \sum_{i=0}^{3} w_i f(t_i)\) to approximate the integral.
+    \item Display the result.
+\end{enumerate}
+
+\section*{Results}  
+The numerical integration using 4-point Gauss quadrature gives:
+
+\begin{itemize}
+    \item \textbf{Integral Value:} \(I \approx 0.693146\)
+\end{itemize}
+
+\section*{Conclusion}  
+The 4-point Gauss-Legendre quadrature accurately approximates the integral of
+\(f(x) = \frac{1}{x+1}\) over \([0, 1]\).  
+Using the change of variables, standard Gauss-Legendre nodes and weights can be applied to any finite interval, demonstrating the flexibility and efficiency of the Gauss quadrature method.
+

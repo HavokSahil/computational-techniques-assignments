@@ -1,0 +1,65 @@
+clc; clear all;
+
+%% 4-Point Gauss–Legendre Nodes and Weights (Exact Form)
+ng = 4;
+nodes = [
+    -sqrt((3/7) - (2/7)*sqrt(6/5));
+    -sqrt((3/7) + (2/7)*sqrt(6/5));
+     sqrt((3/7) + (2/7)*sqrt(6/5));
+     sqrt((3/7) - (2/7)*sqrt(6/5))
+];
+
+weights = [
+    (18 - sqrt(30)) / 36;
+    (18 + sqrt(30)) / 36;
+    (18 + sqrt(30)) / 36;
+    (18 - sqrt(30)) / 36
+];
+
+
+%% Physical constants
+rho0 = 1.0;
+eps0 = 1.0;
+a    = 1.0;
+
+
+%% Integrand: p^2 * e^{-(R^2 p^2)/a^2}
+function y = fun(p, R, a)
+    y = exp(-(R*R)*(p*p)/(a*a)) * (p*p);
+endfunction
+
+
+%% Compute E(R) using 4-pt Gauss–Legendre rule
+function E = computeE(R, nodes, weights, rho0, eps0, a)
+    E = (rho0 * R) / (2 * eps0);
+
+    I = 0;
+    for i = 1:length(nodes)
+        I += weights(i) * fun(nodes(i), R, a);
+    end
+
+    E *= I;
+endfunction
+
+
+%% Total charge using 2-pt Gauss–Hermite rule
+x  = [-1/sqrt(2); 1/sqrt(2)];
+wH = [sqrt(pi)/2; sqrt(pi)/2];
+
+Q = 2*pi*a^3*rho0 * (wH(1)*x(1)^2 + wH(2)*x(2)^2);
+fprintf("Total charge in space: %.6f\n", Q);
+
+
+%% Compute E(R) over range
+Rs = 0.1:0.01:10;
+Es = arrayfun(@(R) computeE(R, nodes, weights, rho0, eps0, a), Rs);
+
+
+%% PLOT
+figure;
+plot(Rs, Es, "linewidth", 2);
+grid on;
+xlabel("R");
+ylabel("E(R)");
+title("Electric Field vs Radius Using 4-Point Gauss–Legendre Quadrature");
+

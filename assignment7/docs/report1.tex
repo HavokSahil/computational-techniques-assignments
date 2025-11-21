@@ -1,0 +1,52 @@
+\section*{Problem Statement}  
+The objective of this problem is to \textbf{numerically integrate} the function
+\[
+f(x) = \frac{8(x+3)}{16 + (x+3)^4}
+\]
+over the interval \(x \in [-1, 1]\) using the \textbf{4-point Gauss-Legendre quadrature} method.
+
+\section*{Methodology}  
+
+\subsection*{Gauss-Legendre Quadrature (4-point)}  
+The Gauss-Legendre quadrature method approximates the definite integral
+\[
+\int_{-1}^{1} f(x) \, dx
+\]
+as a weighted sum of function values at specific nodes:
+
+\[
+I \approx \sum_{i=0}^{3} w_i \, f(x_i)
+\]
+
+where \(x_i\) are the Gauss-Legendre nodes and \(w_i\) are the corresponding weights.  
+For 4-point quadrature, the nodes and weights are precomputed as:
+
+\[
+\begin{aligned}
+x_0 &= -0.86114, & w_0 &= 0.34785 \\
+x_1 &= -0.33998, & w_1 &= 0.65215 \\
+x_2 &=  0.33998, & w_2 &= 0.65215 \\
+x_3 &=  0.86114, & w_3 &= 0.34785
+\end{aligned}
+\]
+
+\subsection*{Implementation Steps}  
+\begin{enumerate}
+    \item Define the function \(f(x) = \frac{8(x+3)}{16 + (x+3)^4}\).
+    \item Specify the 4 Gauss-Legendre nodes and weights.
+    \item Compute the weighted sum \(I = \sum_{i=0}^{3} w_i f(x_i)\) to approximate the integral.
+    \item Display the result.
+\end{enumerate}
+
+\section*{Results}  
+The numerical integration using 4-point Gauss quadrature gives:
+
+\begin{itemize}
+    \item \textbf{Integral Value:} \(I \approx 0.540410\)
+\end{itemize}
+
+\section*{Conclusion}  
+The 4-point Gauss-Legendre quadrature accurately approximates the integral of
+\(f(x) = \frac{8(x+3)}{16 + (x+3)^4}\) over \([-1, 1]\).  
+For smooth functions, Gauss quadrature achieves high accuracy with very few nodes compared to methods like the trapezoidal rule.
+
