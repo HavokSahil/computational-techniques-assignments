@@ -1,0 +1,98 @@
+\section*{Problem Statement}
+
+The goal of this problem is to numerically solve the time-dependent Schrödinger equation (TDSE)
+\[
+i \frac{\partial \psi}{\partial t}
+=
+-\frac{1}{2}\frac{\partial^2 \psi}{\partial x^2}
++ V(x,t)\,\psi(x,t),
+\]
+for a particle placed in a time-dependent ``breathing'' harmonic potential
+\[
+V(x,t) = \frac12\,k(t)\,x^2,
+\qquad 
+k(t) = \cos^2\!\left(\frac{2\pi t}{T}\right).
+\]
+
+The initial wavefunction is chosen as the ground-state of a harmonic oscillator:
+\[
+\psi(x,0) = \left(\frac{1}{\pi}\right)^{1/4} e^{-x^2/2}.
+\]
+
+The objective is to evolve this wavefunction forward in time and study how the probability density
+\(|\psi(x,t)|^2\) behaves as the trap strength oscillates.
+
+\section*{Methodology}
+
+\subsection*{Discretization}
+
+The spatial domain is taken as
+\[
+x\in[-5,5], \qquad N_x = 200,
+\]
+and the spacing is
+\[
+\Delta x = \frac{x_{\max}-x_{\min}}{N_x-1}.
+\]
+
+The simulation runs for
+\[
+\Delta t = 0.0005, \qquad N_t = 2000
+\]
+time steps.
+
+\subsection*{Numerical Update}
+
+The second derivative is approximated using the usual central finite-difference expression,
+\[
+\frac{\partial^2\psi}{\partial x^2}
+\approx
+\frac{\psi_{i+1}-2\psi_i+\psi_{i-1}}{\Delta x^2}.
+\]
+
+At each time step, the potential is updated according to the breathing function
+\[
+k(t) = \cos^2\!\left(\frac{2\pi t}{T}\right),
+\]
+and the wavefunction is advanced using the simple explicit update formula implemented in the code.  
+Boundary conditions
+\[
+\psi(-5,t)=\psi(5,t)=0
+\]
+are applied at every step.
+
+The quantity \(|\psi(x,t)|^2\) is stored for visualization, and a heatmap of its logarithm is plotted.
+
+\section*{Results}
+
+The expected behaviour was a clear breathing pattern, where the wavefunction periodically expands and contracts as the trap oscillates.  
+However, during the simulation the following was observed:
+
+\begin{itemize}
+    \item The values of \(|\psi|^2\) steadily increase with time.
+    \item The gradient in the heatmap becomes stronger as time progresses.
+    \item The breathing pattern is not clearly visible in the output.
+\end{itemize}
+
+A sample heatmap produced by the simulation is shown below.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{a4.jpg}
+    \caption{Heatmap of $\log_{10}(|\psi(x,t)|^2)$ obtained from the simulation.}
+\end{figure}
+
+\section*{Current Issue and Instructor Feedback Request}
+
+At the moment, the simulation does not show the breathing motion that was expected from the physical setup.  
+Instead, the magnitude seems to grow over time, and I am not sure where the issue lies in the numerical procedure.
+
+Since I am still learning these methods, I am unsure whether the problem comes from the time step, the discretization, or something in the update formula.
+
+\textbf{I would like to request guidance from the instructor on how to correct this and obtain the intended breathing behaviour.}
+
+\section*{Conclusion}
+
+A numerical simulation of a particle in a breathing harmonic potential was performed, but the expected oscillatory behaviour was not clearly observed.  
+The results show growth in the wavefunction amplitude, and further clarification is needed regarding how to stabilize or correct the procedure.
+

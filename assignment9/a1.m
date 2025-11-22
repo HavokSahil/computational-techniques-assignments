@@ -1,0 +1,107 @@
+%% Program to solve for the Duffing Oscillator Equation using RK-4 Method
+%
+% Author: Sahil Raj
+% Assignment 9 Problem 1
+
+clc; clear all;
+
+% CONSTANTS
+k = -1;
+b = 0.2;
+l = 1;
+F0 = 0.3;
+w = 1.2;
+m = 1.0;
+
+% COEFFICIENTS
+c1 = -k/m;
+c2 = -l/m;
+c3 = b/m;
+c4 = F0/m;
+
+% FUNCTION FOR SLOPE OF V(t)
+F = @(x, v, t) c1*x + c2*x*x*x + c3*v + c4*cos(w*t);
+
+x0 = 1.0;
+v0 = 0.0;
+
+% INITIAL VECTOR
+Y0 = [
+  x0;
+  v0;
+];
+
+dt = 0.1;
+tmin = 0.0;
+tmax = 64.0;
+
+ts = tmin:dt:tmax;
+N = length(ts);
+
+% SOLUTION ARRAY
+Ys = zeros(N, 2);
+
+% PLACE THE INITIAL CONDITION
+Ys(1, :) = Y0;
+
+for i = 2:N
+  Y = Ys(i-1, :);
+  x = Y(1);
+  v = Y(2);
+  t = tmin + (i-1) * dt;
+
+  % slopes for x and v
+  k1x = dt * v;
+  k1v = dt * F(x, v, t);
+  k2x = dt * (v + 0.5*k1v);
+  k2v = dt * F(x + 0.5*k1x, v + 0.5*k1v, t + 0.5*dt);
+  k3x = dt * (v + 0.5*k2v);
+  k3v = dt * F(x + 0.5*k2x, v + 0.5*k2v, t + 0.5*dt);
+  k4x = dt * (v + k3v);
+  k4v = dt * F(x + k3x, v + k3v, t + dt);
+  x_next = x + (k1x + 2*k2x + 2*k3x + k4x)/6;
+  v_next = v + (k1v + 2*k2v + 2*k3v + k4v)/6;
+  Ys(i,:) = [x_next, v_next];
+endfor
+
+% Extract results
+Xs = Ys(:, 1);
+Vs = Ys(:, 2);
+
+% Create figure with 3 subplots
+figure('Name','Duffing Oscillator Results','NumberTitle','off');
+
+% Plot x(t)
+subplot(3,1,1);
+plot(ts, Xs, 'r', 'LineWidth', 1.5);
+grid on;
+xlabel('Time t');
+ylabel('Displacement x(t)');
+title('Duffing Oscillator: Displacement vs Time');
+
+% Plot v(t)
+subplot(3,1,2);
+plot(ts, Vs, 'g', 'LineWidth', 1.5);
+grid on;
+xlabel('Time t');
+ylabel('Velocity v(t)');
+title('Duffing Oscillator: Velocity vs Time');
+
+% Plot phase space (v vs x)
+subplot(3,1,3);
+plot(Xs, Vs, 'b', 'LineWidth', 1.5);
+grid on;
+xlabel('Displacement x(t)');
+ylabel('Velocity v(t)');
+title('Duffing Oscillator: Phase Space');
+axis tight;
+
+% Optional: add arrow markers along the phase trajectory to indicate direction
+hold on;
+quiver(Xs(1:10:end-1), Vs(1:10:end-1), ...
+       diff(Xs(1:10:end)), diff(Vs(1:10:end)), 0.5, 'k');
+hold off;
+
+% Improve spacing between subplots
+sgtitle('Duffing Oscillator Dynamics (RK4 Method)');
+

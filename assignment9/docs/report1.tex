@@ -1,0 +1,69 @@
+\section*{Problem Statement}  
+The objective of this problem is to \textbf{numerically solve} the \textbf{Duffing oscillator} equation:
+
+\[
+m \frac{d^2 x}{dt^2} + b \frac{dx}{dt} + k x + l x^3 = F_0 \cos(\omega t)
+\]
+
+with parameters: \(m=1\), \(k=-1\), \(b=0.2\), \(l=1\), \(F_0=0.3\), \(\omega=1.2\).  
+The goal is to compute the time evolution of \(x(t)\) and \(v(t) = \frac{dx}{dt}\), and plot the phase space diagram using the \textbf{fourth-order Runge-Kutta (RK-4) method}.
+
+\section*{Methodology}  
+
+\subsection*{Fourth-Order Runge-Kutta Method}  
+The Duffing oscillator is a second-order ODE. We rewrite it as a system of two first-order ODEs:
+
+\[
+\begin{aligned}
+\frac{dx}{dt} &= v \\
+\frac{dv}{dt} &= \frac{1}{m} \big( -k x - l x^3 - b v + F_0 \cos(\omega t) \big)
+\end{aligned}
+\]
+
+The RK-4 method approximates the solution iteratively:
+
+\[
+\begin{aligned}
+k_1 &= f(t_n, y_n) \, dt \\
+k_2 &= f(t_n + \frac{dt}{2}, y_n + \frac{k_1}{2}) \, dt \\
+k_3 &= f(t_n + \frac{dt}{2}, y_n + \frac{k_2}{2}) \, dt \\
+k_4 &= f(t_n + dt, y_n + k_3) \, dt \\
+y_{n+1} &= y_n + \frac{k_1 + 2 k_2 + 2 k_3 + k_4}{6}
+\end{aligned}
+\]
+
+Here \(y_n = [x_n, v_n]^T\) and \(f\) represents the system of derivatives.
+
+\subsection*{Implementation Steps}  
+\begin{enumerate}
+    \item Define the initial conditions: \(x(0) = 1\), \(v(0) = 0\).
+    \item Specify constants: \(m, k, l, b, F_0, \omega\).
+    \item Set time step \(\Delta t = 0.1\) and time range \(t \in [0, 64]\).
+    \item Iterate the RK-4 scheme to compute \(x(t)\) and \(v(t)\) for each time step.
+    \item Plot:
+    \begin{itemize}
+        \item \(x(t)\) vs \(t\)
+        \item \(v(t)\) vs \(t\)
+        \item Phase space: \(v(t)\) vs \(x(t)\)
+    \end{itemize}
+\end{enumerate}
+
+\section*{Results}  
+The numerical solution produces the following behavior:
+
+\begin{itemize}
+    \item The displacement \(x(t)\) shows a non-linear oscillatory pattern due to the cubic term.
+    \item The velocity \(v(t)\) follows a corresponding non-linear trajectory.
+    \item The phase space diagram exhibits a \textbf{limit cycle}, typical of a Duffing oscillator under periodic forcing.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{a1.jpg}
+    \caption{Time evolution of \(x(t)\), \(v(t)\), and phase space diagram \(v\) vs \(x\) for the Duffing oscillator.}
+\end{figure}
+
+\section*{Conclusion}  
+The 4th-order Runge-Kutta method accurately integrates the Duffing oscillator equation, capturing both the non-linear dynamics and the characteristic limit cycle in phase space.  
+This method provides stable and precise results for moderately stiff non-linear ODEs with relatively large time steps.
+

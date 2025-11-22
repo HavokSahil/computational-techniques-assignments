@@ -1,0 +1,79 @@
+\section*{Problem Statement}
+The goal of this problem is to \textbf{numerically solve the one-dimensional heat equation}
+
+\[
+\frac{\partial u}{\partial t} = \alpha\, \frac{\partial^2 u}{\partial x^2}
+\]
+
+on a rod of length \(L = 1\) meter with thermal diffusivity \(\alpha = 0.01\).  
+The domain is \(x \in [0, 1]\), \(t \ge 0\).
+
+The boundary and initial conditions are:
+\[
+u(0,t) = 0,\qquad  
+u(1,t) = 0,
+\]
+\[
+u(x,0) = \sin(\pi x).
+\]
+
+\section*{Methodology}
+
+\subsection*{Finite Difference Discretization}
+The heat equation is discretized using the \textbf{explicit forward-time, central-space (FTCS)} finite difference scheme:
+
+\[
+u_i^{n+1}
+= c \, u_{i+1}^n
++ c \, u_{i-1}^n
++ (1 - 2c)\, u_i^n,
+\]
+
+where:
+
+\[
+c = \frac{\alpha\, \Delta t}{\Delta x^2}
+\]
+
+and:
+\[
+u_i^n \approx u(x_i, t_n).
+\]
+
+For this simulation:
+\[
+\Delta x = 0.05,\quad
+\Delta t = 0.1,\quad
+c = \frac{0.01 \cdot 0.1}{(0.05)^2} = 0.4.
+\]
+
+The scheme is stable because \(c \le 0.5\).
+
+\subsection*{Implementation Steps}
+\begin{enumerate}
+    \item Discretize the spatial domain using \(x_i = 0:0.05:1\).
+    \item Discretize time using \(t_n = 0:0.1:32\).
+    \item Initialize the solution using \(u(x,0) = \sin(\pi x)\).
+    \item Apply boundary conditions: \(u(0,t)=0\) and \(u(1,t)=0\).
+    \item Use the FTCS formula to compute the temperature for each time step.
+    \item Visualize the evolution using a surface plot.
+\end{enumerate}
+
+\section*{Results}
+The numerical solution shows the diffusion of the initial heat profile over time:
+
+\begin{itemize}
+    \item The sinusoidal temperature profile smooths out as time progresses.
+    \item Heat dissipates toward the boundaries due to the fixed boundary temperatures.
+    \item The temperature approaches zero everywhere for large \(t\), consistent with physical expectation.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{a2.jpg}
+    \caption{Temperature evolution \(u(x,t)\) for the 1D heat equation using the FTCS method.}
+\end{figure}
+
+\section*{Conclusion}
+The explicit finite-difference method successfully models the temperature evolution in a rod governed by the 1D heat equation. The solution respects the imposed boundary conditions and demonstrates the expected decay of the initial sinusoidal temperature profile as heat diffuses through the rod.
+

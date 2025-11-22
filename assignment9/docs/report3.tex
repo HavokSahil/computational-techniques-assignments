@@ -1,0 +1,96 @@
+\section*{Problem Statement}
+The purpose of this problem is to \textbf{numerically solve} the two-dimensional Poisson equation
+
+\[
+\frac{\partial^2 u}{\partial x^2} +
+\frac{\partial^2 u}{\partial y^2}
+= -2\pi^2 \sin(\pi x)\sin(\pi y)
+\]
+
+on the square domain:
+\[
+0 \le x \le 1,\qquad 0 \le y \le 1
+\]
+
+with boundary condition:
+\[
+u(x,y) = 0 \quad \text{for all boundaries}.
+\]
+
+The exact solution to this PDE is known:
+\[
+u(x,y) = \sin(\pi x)\sin(\pi y).
+\]
+
+This provides a good reference to verify the numerical method.
+
+\section*{Methodology}
+
+\subsection*{Finite Difference Discretization}
+
+The domain is discretized using a uniform grid of size:
+\[
+N = 50,\qquad h = \frac{1}{N+1}.
+\]
+
+Using the second-order central difference approximation, the Poisson equation becomes:
+
+\[
+u_{i+1,j} + u_{i-1,j} + u_{i,j+1} + u_{i,j-1}
+- 4 u_{i,j}
+= -h^2 F_{i,j}
+\]
+
+where
+\[
+F(x,y) = -2\pi^2 \sin(\pi x)\sin(\pi y).
+\]
+
+Rearranging gives the classic \textbf{Jacobi iteration} formula:
+
+\[
+u_{i,j}^{(k+1)} =
+\frac{1}{4}
+\left(
+u_{i+1,j}^{(k)} + u_{i-1,j}^{(k)} +
+u_{i,j+1}^{(k)} + u_{i,j-1}^{(k)}
+- h^2 F_{i,j}
+\right).
+\]
+
+\subsection*{Implementation Steps}
+
+\begin{enumerate}
+    \item Construct a \( (N+2) \times (N+2) \) grid including boundaries.
+    \item Initialize \(u = 0\) everywhere (consistent with boundary conditions).
+    \item Compute the forcing term \(F(x,y)\).
+    \item Iterate using Jacobi updates until:
+          \[
+          \| U^{(k+1)} - U^{(k)} \|_\infty < 10^{-6}
+          \]
+    \item Visualize the final solution using a surface plot.
+\end{enumerate}
+
+Convergence is checked through the maximum absolute difference between successive iterates.
+
+\section*{Results}
+
+The Jacobi method converged within the specified tolerance.  
+The resulting numerical solution reproduces the expected shape of the analytic solution \(u(x,y) = \sin(\pi x)\sin(\pi y)\).
+
+\begin{itemize}
+    \item The solution exhibits a smooth peak at the center \( (0.5, 0.5 ) \).
+    \item Boundary values correctly remain at zero.
+    \item The surface plot clearly shows the symmetric sinusoidal structure.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.75\textwidth]{a3.jpg}
+    \caption{Numerical solution of the 2D Poisson equation using the Jacobi iteration method.}
+\end{figure}
+
+\section*{Conclusion}
+
+The Jacobi finite-difference method successfully solves the 2D Poisson equation on a square domain. The numerical solution matches the theoretical structure of the exact solution and demonstrates correct behavior under zero boundary conditions. Although Jacobi iteration converges slowly, it provides a simple and reliable method for validating PDE solvers.
+
