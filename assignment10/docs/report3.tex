@@ -1,0 +1,95 @@
+\section*{Jacobi Diagonalization of a 3-Level Quantum Hamiltonian}
+
+\subsection*{Problem Statement}
+
+Consider a quantum system with three basis states:
+\[
+|1\rangle,\; |2\rangle,\; |3\rangle,
+\]
+with unperturbed energies \(E_1, E_2, E_3\). In the presence of coupling \(V\), the Hamiltonian becomes:
+\[
+H = H_0 + V,
+\]
+introducing mixing between the basis states.  
+For the given atomic system, the Hamiltonian matrix is:
+\[
+H =
+\begin{bmatrix}
+1.0 & 0.2 & 0.1 \\
+0.2 & 2.0 & 0.3 \\
+0.1 & 0.3 & 3.0
+\end{bmatrix}.
+\]
+
+Our goal is to diagonalize this Hamiltonian using the \textbf{Jacobi rotation method} and obtain:
+\begin{itemize}
+    \item the \textbf{eigenvalues} (physical energy levels),
+    \item the \textbf{eigenvectors} (mixing of the basis states).
+\end{itemize}
+
+\subsection*{Methodology}
+
+The Hamiltonian is real and symmetric, so Jacobi diagonalization can be used.  
+The procedure is:
+
+\begin{enumerate}
+    \item Identify the largest off-diagonal component \(H_{pq}\).
+    \item Compute the rotation angle:
+    \[
+    \theta = 
+    \frac{1}{2}
+    \tan^{-1}\left(\frac{2 H_{pq}}{H_{pp} - H_{qq}}\right).
+    \]
+    \item Construct a planar Givens rotation matrix \(R\) mixing rows/columns \(p\) and \(q\).
+    \item Update the Hamiltonian:
+    \[
+    H \leftarrow RHR^{T}.
+    \]
+    \item Accumulate eigenvectors:
+    \[
+    Q \leftarrow Q R.
+    \]
+\end{enumerate}
+
+Iterations stop when all off-diagonal elements fall below threshold.
+
+\subsection*{Results}
+
+After convergence, the diagonal matrix \(D\) and eigenvector matrix \(Q\) are obtained as:
+
+\[
+\textbf{Eigenvalues:}\qquad
+\lambda = (0.9606,\; 1.9455,\; 3.0939).
+\]
+
+\[
+\textbf{Eigenvectors (columns of $Q$):}
+\qquad
+Q =
+\begin{bmatrix}
+0.982891 & -0.172578 & -0.064360 \\
+0.145984 & \;\,0.942982 & -0.299120 \\
+0.112312 & \;\,0.284607 & \;\,0.952042
+\end{bmatrix}.
+\]
+
+\subsection*{Physical Interpretation}
+
+Each column of \(Q\) is a normalized eigenvector:
+\[
+|\psi_i\rangle
+= c_{1i}|1\rangle + c_{2i}|2\rangle + c_{3i}|3\rangle,
+\]
+describing how the original basis states mix due to the off-diagonal couplings.
+
+\begin{itemize}
+    \item The lowest energy eigenstate (0.9606) is dominated by \(|1\rangle\) with small admixtures of \(|2\rangle, |3\rangle\).
+    \item The middle state (1.9455) is mostly \(|2\rangle\), but significantly mixed.
+    \item The highest state (3.0939) is largely \(|3\rangle\), with small contributions from the first two.
+\end{itemize}
+
+\subsection*{Conclusion}
+
+The Jacobi diagonalization successfully produced the eigenvalues and eigenvectors of the coupled 3-state Hamiltonian. The results clearly show mixing between the basis states due to the off-diagonal couplings. The eigenvectors form an orthonormal basis, representing the physical stationary states of the system.
+
+

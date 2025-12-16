@@ -1,0 +1,73 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\geometry{margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=cyan,
+    citecolor=red
+}
+
+
+\usepackage{xcolor}        % Optional, for syntax highlighting
+
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    breakatwhitespace=true,
+    numbers=left,
+    numbersep=5pt,
+    frame=single,
+    tabsize=4
+}
+
+\lstset{style=mystyle, language=Matlab}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}
+  {\normalfont\Large\bfseries} % format
+  {\thechapter:}       % prints "Problem n"
+  {10pt}                       % spacing between number and title
+  {\Large}                     % format for the title
+  [\vspace{1ex}]               % optional vertical space after
+
+\title{\textbf{Endsem Lab Assignment}\\Ground and First Excited States of the Hydrogen Atom}
+\author{Sahil Raj\\\textit{2301CS41}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+\chapter{Octave Code for Problem}
+\input{code.tex}
+\chapter{Results}
+\input{results.tex}
+\section{Eigenvalues}
+The eigenvalue for ground state: 3.9835 \\ 
+The eigenvalue for first excited state: 3.9758\\
+in the normalized units.
+
+\end{document}
+
+

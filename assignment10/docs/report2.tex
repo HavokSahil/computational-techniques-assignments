@@ -1,0 +1,104 @@
+\section*{Principal Axes and Principal Moments of Inertia of a Uniform Cube}
+
+\subsection*{Problem Statement}
+
+The purpose of this problem is to compute the \textbf{principal moments of inertia} and the corresponding \textbf{principal axes} of a solid cube using the \textbf{Jacobi diagonalization method}. 
+
+We consider a cube of:
+\[
+M = 1, \qquad L = 1,
+\]
+with its moment of inertia tensor specified as:
+\[
+I = (ML^2)
+\begin{bmatrix}
+\frac{1}{3} & \frac{1}{4} & \frac{1}{4} \\
+\frac{1}{4} & \frac{1}{3} & \frac{1}{4} \\
+\frac{1}{4} & \frac{1}{4} & \frac{1}{3}
+\end{bmatrix}.
+\]
+
+The objectives of this assignment are:
+\begin{itemize}
+    \item Diagonalize the inertia tensor numerically using iterative Jacobi rotations.
+    \item Extract the \textbf{principal moments} (eigenvalues).
+    \item Extract the \textbf{principal axes} (eigenvectors).
+    \item Visualize these axes in a 3D coordinate system.
+\end{itemize}
+
+\subsection*{Methodology}
+
+\subsubsection*{Jacobi Diagonalization Method}
+
+Since the inertia tensor is symmetric, it can be diagonalized by a sequence of planar rotations.  
+The algorithm proceeds as follows:
+
+\begin{enumerate}
+    \item Identify the largest off-diagonal element \(I_{pq}\).
+    \item Compute the rotation angle:
+    \[
+    \theta =
+    \begin{cases}
+        \frac{\pi}{4}, & I_{pp} = I_{qq}, \\[6pt]
+        \frac{1}{2}\tan^{-1}\left(\frac{2 I_{pq}}{I_{pp} - I_{qq}}\right), & \text{otherwise}.
+    \end{cases}
+    \]
+    \item Construct the Givens rotation matrix \(R\).
+    \item Update the inertia tensor:
+    \[
+    I \leftarrow RIR^{T}.
+    \]
+    \item Accumulate the rotation:
+    \[
+    Q \leftarrow Q R,
+    \]
+    where \(Q\) stores the principal axes.
+\end{enumerate}
+
+Iterations continue until all off-diagonal components fall below the tolerance.
+
+\subsection*{Results}
+
+After the Jacobi iterations converge, the final diagonal inertia tensor and corresponding principal axes are:
+
+\[
+\text{Principal moments:}
+\qquad
+D =
+\begin{bmatrix}
+0.8333 & 0      & 0 \\
+0      & 0.0833 & 0 \\
+0      & 0      & 0.0833
+\end{bmatrix}
+\]
+
+\[
+\text{Principal axes (columns of } Q\text{):}
+\qquad
+Q =
+\begin{bmatrix}
+0.5774 & 0.7071 & 0.4082 \\
+-0.5774 & 0.7071 & -0.4082 \\
+-0.5774 & 0      & 0.8165
+\end{bmatrix}
+\]
+
+\subsubsection*{Interpretation}
+
+\begin{itemize}
+    \item The cube exhibits one significantly larger principal moment \(I_1 = 0.8333\), corresponding to rotation about the axis aligned with the vector \((1, -1, -1)\).
+    \item The two remaining principal moments \(I_2 = I_3 = 0.0833\) reflect symmetry in the remaining orthogonal axes.
+    \item The eigenvectors form an orthonormal basis representing the physical orientations of the principal axes.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{a2.jpg}
+    \caption{Visualization of the principal axes of the cube. Each eigenvector is plotted as a directed line emerging from the origin.}
+\end{figure}
+
+\subsection*{Conclusion}
+
+Using the Jacobi diagonalization method, the inertia tensor of the cube was successfully diagonalized. The algorithm produced both the principal moments and the principal axes, which agree with the expected symmetry of the cube. The numerical results clearly demonstrate one dominant principal direction and two equal secondary directions, consistent with the geometry of the object.
+
+

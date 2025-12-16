@@ -1,0 +1,46 @@
+\begin{lstlisting}
+clc; clear all;
+
+% CONSTANTS
+dr = 0.01;
+k = -1;
+xmin = dr;
+xmax = 1.0;
+
+% INITIALIZE THE VECTORS
+Xs = xmin:dr:xmax;
+N = length(Xs);
+P = @(j) 2*k + 1/j;
+
+% INITIALIZE THE TRIDIAGONAL MATRIX
+A = zeros(N, N);
+for i = 1:N
+  A(i, i) = -P(i);
+  if i < N
+    A(i, i+1) = k;
+  endif
+  if i > 1
+    A(i, i-1) = k;
+  endif
+endfor
+
+% FIND THE EIGENVALUES AND EIGENVECTORS
+[V, D] = eigs(A);
+psi0 = V(:, 1);
+psi1 = V(:, 2);
+e0 = D(1, 1);
+e1 = D(2, 2);
+
+psi0 = psi0 / norm(psi0);
+psi1 = psi1 / norm(psi1);
+
+% PLOT THE RESULTS
+plot(Xs, psi0);
+hold on;
+plot(Xs, psi1);
+title("Ratial wave function r.R(r) for Ground State and First Excited State");
+xlabel("r");
+ylabel("u(r)");
+legend(["Ground State"; "First Excited State"]);
+hold off;
+\end{lstlisting}

@@ -1,0 +1,102 @@
+\section*{Principal Axes and Principal Moments of Inertia}
+
+\subsection*{Problem Statement}
+
+The goal of this problem is to compute the \textbf{principal moments of inertia} and the corresponding \textbf{principal axes} for a discrete system of point masses using the \textbf{Jacobi diagonalization method}. 
+
+We consider two point masses of equal mass \(m = 1\), located at:
+\[
+(-b,\; b,\; 0), \qquad (b,\; -b,\; 0), \qquad b = 1.
+\]
+
+The steps involved are:
+\begin{itemize}
+    \item Construct the moment of inertia matrix from the given masses and their coordinates.
+    \item Iteratively diagonalize the inertia matrix using Jacobi rotations.
+    \item Extract the eigenvalues (principal moments) and eigenvectors (principal axes).
+    \item Visualize the principal axes in 3D.
+\end{itemize}
+
+\subsection*{Methodology}
+
+\subsubsection*{Moment of Inertia Matrix}
+
+For point masses, the inertia tensor is:
+\[
+I_{ij} = \sum_{n=1}^{N} m_n \, x_{n,i} x_{n,j},
+\]
+where \(x_{n,i}\) is the \(i\)-th coordinate of the \(n\)-th mass.  
+Because the distribution is symmetric, the resulting inertia tensor is symmetric as well.
+
+\subsubsection*{Jacobi Diagonalization Method}
+
+To diagonalize the inertia matrix:
+
+\begin{enumerate}
+    \item Identify the largest off-diagonal element \(I_{pq}\).
+    \item Compute the rotation angle:
+    \[
+    \theta =
+    \begin{cases}
+        \frac{\pi}{4}, & \text{if } I_{pp} = I_{qq}, \\[6pt]
+        \frac{1}{2} \tan^{-1}\left(\frac{2 I_{pq}}{I_{pp} - I_{qq}}\right), & \text{otherwise}.
+    \end{cases}
+    \]
+    \item Construct the corresponding rotation matrix \(R\).
+    \item Update:
+    \[
+    I \leftarrow R I R^{T}.
+    \]
+    \item Accumulate rotations:
+    \[
+    Q \leftarrow Q R,
+    \]
+    where \(Q\) will contain the principal axes.
+\end{enumerate}
+
+The algorithm stops when all off-diagonal elements fall below a threshold.
+
+\subsection*{Results}
+
+After convergence, the numerical algorithm yields the following diagonalized inertia matrix and principal axes:
+
+\[
+\text{Principal moments:}
+\qquad
+D =
+\begin{bmatrix}
+0      & 0      & 0 \\
+0      & 4.0000 & 0 \\
+0      & 0      & 0
+\end{bmatrix}
+\]
+
+\[
+\text{Principal axes (columns of } Q\text{):}
+\qquad
+Q =
+\begin{bmatrix}
+0.7071 & 0.7071 & 0 \\
+-0.7071 & 0.7071 & 0 \\
+0 & 0 & 1.0000
+\end{bmatrix}
+\]
+
+These results show that:
+\begin{itemize}
+    \item The system has one non-zero principal moment \(I_2 = 4\), consistent with two masses mirrored across the origin in the plane.
+    \item Two principal moments vanish due to the configuration lying strictly in the \(xy\)-plane.
+    \item The principal axes correspond to rotated directions in the plane, at \(45^\circ\) relative to the coordinate axes, plus the trivial \(z\)-axis.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{a1.jpg}
+    \caption{3D visualization of the principal axes obtained from the inertia tensor. The three eigenvectors are plotted as vectors emerging from the origin.}
+\end{figure}
+
+\subsection*{Conclusion}
+
+The Jacobi rotation method successfully diagonalizes the inertia tensor and computes the correct principal moments and axes for the given two--mass configuration. The results match physical expectations: a single non-zero moment associated with rotation in the plane of the masses and two zero moments corresponding to symmetry directions. The principal axes form an orthonormal basis that aligns with the directions of maximal and minimal rotational inertia.
+
+
